@@ -1,0 +1,7 @@
+{
+    "name": "zoo-mobile",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
+}

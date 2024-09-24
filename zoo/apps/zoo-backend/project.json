@@ -1,0 +1,32 @@
+{
+    "name": "zoo-backend",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/zoo-backend/src",
+    "projectType": "application",
+    "tags": [],
+    "targets": {
+        "serve": {
+            "executor": "@nx/js:node",
+            "options": {
+                "buildTarget": "zoo-backend:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "zoo-backend:build:development"
+                },
+                "production": {
+                    "buildTarget": "zoo-backend:build:production"
+                }
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "apps/zoo-backend/jest.config.ts"
+            }
+        }
+    }
+}
