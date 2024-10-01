@@ -1,22 +1,36 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
-import { Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as process from 'node:process';
+
+const globalPrefix = 'api';
+const port = process.env.BACKEND_PORT || 3000;
+const host = process.env.BACKEND_HOST || 'localhost';
+
+
+function setupOpenApi(app: INestApplication): void {
+    const config = new DocumentBuilder()
+        .setTitle('API Documentation')
+        .setVersion('1.0')
+        .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('swagger', app, document, { useGlobalPrefix: true });
+
+    Logger.log(`🚀 OpenAPI is running on: http://${ host }:${ port }/${ globalPrefix }/swagger`);
+}
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    const globalPrefix = 'api';
     app.setGlobalPrefix(globalPrefix);
-    const port = process.env.PORT || 3000;
-    await app.listen(port);
-    Logger.log(
-        `🚀 Application is running on: http://localhost:${ port }/${ globalPrefix }`
-    );
+    setupOpenApi(app);
+
+    await app.listen(port, host);
+
+    Logger.log(`🚀 Application is running on: http://${ host }:${ port }/${ globalPrefix }`);
 }
 
-bootstrap();
+bootstrap()
+    .then();
