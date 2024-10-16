@@ -1,35 +1,24 @@
 import { Module } from '@nestjs/common';
-
-import { MongooseModule } from '@nestjs/mongoose';
-import { CONFIG } from '../config/configuration';
-import { AdminModule } from './admin/admin.module';
-import { ClientModule } from './client/client.module';
-import { GigaChatService } from './services/gigachat.service';
-import { RouterModule } from '@nestjs/core';
-import mongoose from 'mongoose';
-import { toJSONPlugin } from './plugins/to-json.plugin';
-
-mongoose.plugin(toJSONPlugin);
+import { AnimalModule, AuthModule, ChatModule, FaqModule, UsersModule, ZooModule } from './modules';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+import { DatabaseModule } from './shared/database.module';
 
 @Module({
     imports: [
-        MongooseModule.forRoot(CONFIG.mongo.url),
-        RouterModule.register([
-            {
-                path: 'admin',
-                module: AdminModule,
-            },
-            {
-                path: 'client',
-                module: ClientModule
-            }
-        ]),
-        AdminModule,
-        ClientModule,
+        ConfigModule.forRoot({
+            isGlobal: true,
+            load: [configuration]
+        }),
+        DatabaseModule,
+        // routing
+        FaqModule,
+        AnimalModule,
+        ZooModule,
+        ChatModule,
+        UsersModule,
+        AuthModule
     ],
-    providers: [
-        GigaChatService
-    ]
 })
-export class AppModule  {
+export class AppModule {
 }

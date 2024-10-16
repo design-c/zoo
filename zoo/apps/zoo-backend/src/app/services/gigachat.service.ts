@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { GigaChat } from 'gigachat-node';
-import { CONFIG } from '../../config/configuration';
 
 @Injectable()
 export class GigaChatService {
@@ -10,15 +9,15 @@ export class GigaChatService {
     ]
 
     constructor() {
-        this._client = new GigaChat(
-            CONFIG.gigaChat.clientSecretKey,
-            true,
-            true,
-            true,
-            true,
-            './image'
-        );
-        this._client.createToken();
+//        this._client = new GigaChat(
+//            CONFIG.gigaChat.clientSecretKey,
+//            true,
+//            true,
+//            true,
+//            true,
+//            './image'
+//        );
+//        this._client.createToken();
     }
 
     public async completion(text: string): Promise<Array<{role: string, content: string}>> {

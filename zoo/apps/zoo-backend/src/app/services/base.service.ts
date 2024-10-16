@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Document, FilterQuery, Model } from 'mongoose';
 
 export abstract class Service<T extends Document> {
-    private readonly modelName: string;
+    protected readonly modelName: string;
 
     constructor(
         protected readonly model: Model<T>,
@@ -15,7 +15,14 @@ export abstract class Service<T extends Document> {
         }
     }
 
-    async findOne(
+    /**
+     * Находит одну запись по указанным условиям.
+     * @param conditions - Условия для поиска.
+     * @param projection - Опционально: поля для проекции.
+     * @param options - Опционально: дополнительные параметры запроса.
+     * @returns Промис, который возвращает найденный документ или выбрасывает исключение, если документ не найден.
+     */
+    public async findOne(
         conditions: Partial<Record<keyof T, unknown>>,
         projection: string | Record<string, unknown> = {},
         options: Record<string, unknown> = {},
@@ -31,25 +38,45 @@ export abstract class Service<T extends Document> {
         }
     }
 
-    async findAll(): Promise<T[]> {
-        return this.model.find().exec();
+    /**
+     * Возвращает список всех записей, с возможностью фильтрации по zooId.
+     * @param zooId - Опциональный параметр для фильтрации по zooId.
+     * @returns Промис, который возвращает массив найденных документов.
+     */
+    public async findAll(zooId?: string): Promise<T[]> {
+        return this.model.find(zooId ? { zooId } : {}).exec();
     }
 
-    async findById(id: string): Promise<T> {
+    /**
+     * Находит запись по ее ID.
+     * @param id - Идентификатор записи.
+     * @returns Промис, который возвращает найденный документ или выбрасывает исключение, если документ не найден.
+     */
+    public async findById(id: string): Promise<T> {
         const document = await this.model.findById(id).exec();
         if (!document) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);
         }
+
         return document;
     }
 
-    async create(createDto: Partial<T>): Promise<T> {
-        const newDocument = new this.model(createDto);
-
-        return newDocument.save();
+    /**
+     * Создает новую запись.
+     * @param createDto - DTO с данными для создания новой записи.
+     * @returns Промис, который возвращает созданный документ.
+     */
+    public async create(createDto: Partial<T>): Promise<T> {
+        return (new this.model(createDto)).save();
     }
 
-    async update(id: string, updateDto: Partial<T>): Promise<T> {
+    /**
+     * Обновляет запись по ее ID.
+     * @param id - Идентификатор записи.
+     * @param updateDto - DTO с обновленными данными.
+     * @returns Промис, который возвращает обновленный документ или выбрасывает исключение, если документ не найден.
+     */
+    public async update(id: string, updateDto: Partial<T>): Promise<T> {
         const updatedDocument = await this.model.findByIdAndUpdate(id, updateDto, {
             new: true,
         }).exec();
@@ -60,7 +87,12 @@ export abstract class Service<T extends Document> {
         return updatedDocument;
     }
 
-    async delete(id: string): Promise<void> {
+    /**
+     * Удаляет запись по ее ID.
+     * @param id - Идентификатор записи.
+     * @returns Промис, который завершится, когда запись будет удалена, или выбросит исключение, если запись не найдена.
+     */
+    public async delete(id: string): Promise<void> {
         const result = await this.model.findByIdAndDelete(id).exec();
         if (!result) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);

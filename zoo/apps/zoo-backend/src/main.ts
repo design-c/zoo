@@ -12,7 +12,9 @@ const host = process.env.BACKEND_HOST || 'localhost';
 
 function setupOpenApi(app: INestApplication): void {
     const config = new DocumentBuilder()
-        .setTitle('API Documentation')
+        .setTitle('API zoo Documentation')
+        .setDescription('API zoo documentation')
+        .addBearerAuth()
         .setVersion('1.0')
         .build();
 
