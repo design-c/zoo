@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AnimalModule, AuthModule, ChatModule, FaqModule, UsersModule, ZooModule } from './modules';
+import { AnimalModule, AuthModule, FaqModule, UsersModule } from './modules';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { DatabaseModule } from './shared/database.module';
@@ -14,8 +14,8 @@ import { DatabaseModule } from './shared/database.module';
         // routing
         FaqModule,
         AnimalModule,
-        ZooModule,
-        ChatModule,
+//        ZooModule,
+//        ChatModule,
         UsersModule,
         AuthModule
     ],

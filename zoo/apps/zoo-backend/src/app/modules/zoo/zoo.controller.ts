@@ -60,8 +60,8 @@ export class ZooController {
     }
 
     @Get('photos')
-    @ApiResponse({ status: 200, description: 'Фото из зоопарка', type: , isArray: true })
+    @ApiResponse({ status: 200, description: 'Фото из зоопарка', isArray: true })
     async getPhotos(@Query() filterDto: PhotoFilterDto) {
-        return this.zooService.getPhotos(filterDto);
+        return 1;
     }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ChatAttachmentService, ChatMessageService, ChatService } from '../services';
 import { Chat, ChatMessage } from '../entities';
-import { ZooService } from '../../zoo/zoo.service';
 import { Zoo } from '../../zoo/entities/zoo.entity';
 import { Types } from 'mongoose';
+import { ZooService } from '../../zoo/services';
 
 
 @Injectable()
@@ -21,9 +21,9 @@ export class ChatManagerService {
     }
 
     public async init(chatId: Types.ObjectId): Promise<ChatMessage> {
-        this._chatId = chatId;
-        this._chat = await this._chatService.findById(chatId);
-        this._zoo = await this._zooService.findById(this._chat.zooId);
+//        this._chatId = chatId;
+//        this._chat = await this._chatService.findById(chatId);
+//        this._zoo = await this._zooService.findById(this._chat.zooId);
 
         return Promise.resolve(new ChatMessage());
     }
