@@ -1,0 +1,23 @@
+ion-tab-bar {
+    background-color: var(--color-secondary) !important; /* Задний фон всегда светло-голубой */
+    --ion-tab-bar-background: var(--color-secondary);
+}
+
+ion-tab-button {
+    --color-selected: var(--color-primary);
+    --color: var(--color-primary);
+}
+
+ion-icon {
+    color: var(--color-primary) !important;
+}
+
+ion-label {
+    color: var(--color-primary) !important;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.tab-selected ion-label {
+    font-weight: bold !important;
+}

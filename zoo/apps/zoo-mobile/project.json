@@ -29,8 +29,18 @@
                         "glob": "**/*.svg",
                         "input": "node_modules/ionicons/dist/ionicons/svg",
                         "output": "./svg"
+                    },
+                    {
+                        "glob": "*",
+                        "input": "apps/zoo-mobile/src/assets",
+                        "output": "/assets"
                     }
                 ],
+                "stylePreprocessorOptions": {
+                    "includePaths": [
+                        "src/styles.scss"
+                    ]
+                },
                 "styles": [
                     "apps/zoo-mobile/src/styles.scss",
                     {

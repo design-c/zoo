@@ -1,0 +1,18 @@
+.contacts {
+    margin: 0 auto;
+}
+
+p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 8px 0;
+}
+
+strong {
+    font-weight: bold;
+    color: var(--text-primary)
+}
+
+.contacts p:first-of-type {
+    margin-top: 0;
+}

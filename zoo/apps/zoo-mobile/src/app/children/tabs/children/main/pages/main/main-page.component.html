@@ -1,0 +1,21 @@
+<app-main-header></app-main-header>
+<ion-content [fullscreen]="true">
+    <section class="schedule-section">
+        <h2>АФИША</h2>
+        <app-main-carousel [images]="carouselImages"></app-main-carousel>
+    </section>
+    <section class="news-section">
+        <h2>НОВОСТИ</h2>
+        <div class="news-item-list">
+            <app-news-item *ngFor="let item of newsItems"
+                           [title]="item.title"
+                           [date]="item.date"
+                           [imageUrl]="item.imageUrl"
+            ></app-news-item>
+        </div>
+    </section>
+    <section class="contacts-section">
+        <h2>КОНТАКТЫ</h2>
+        <app-contacts></app-contacts>
+    </section>
+</ion-content>
