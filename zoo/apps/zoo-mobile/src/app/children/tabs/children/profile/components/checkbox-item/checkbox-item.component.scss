@@ -1,0 +1,20 @@
+.afisha-container {
+    display: flex;
+    align-items: center;
+
+    .afisha-text {
+        font-size: 24px;
+        color: #424242;
+    }
+
+    .afisha-icon {
+        margin-left: 10px;
+        width: 40px;
+        height: 40px;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}

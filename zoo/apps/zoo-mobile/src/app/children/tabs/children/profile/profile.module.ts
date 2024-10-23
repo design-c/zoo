@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfilePage } from './pages/profile/profile-page.component';
-import { ExploreContainerComponentModule } from '../../../../components/explore-container/explore-container.module';
+import { CheckboxItemComponent } from './components/checkbox-item/checkbox-item.component';
 
 const routes: Routes = [
     {
@@ -18,10 +18,9 @@ const routes: Routes = [
         IonicModule,
         CommonModule,
         FormsModule,
-        ExploreContainerComponentModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [ProfilePage],
+    declarations: [ProfilePage, CheckboxItemComponent],
 })
 export class ProfileModule {
 }
