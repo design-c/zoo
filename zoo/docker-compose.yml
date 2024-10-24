@@ -6,7 +6,9 @@ services:
         extends:
             file: docker-compose.base.yml
             service: nx-app-base
-        command: npm run zoo-backend:dev:docker
+        env_file:
+            - .env
+        command: npx nx serve zoo-backend
         ports:
             - ${BACKEND_PORT}:${BACKEND_PORT}
         depends_on:
