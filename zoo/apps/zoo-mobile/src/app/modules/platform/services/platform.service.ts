@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Device } from '@awesome-cordova-plugins/device/ngx';
 import { Platform } from '@ionic/angular';
 import { IDeviceInfo } from '../interfaces/device-info.interface';
@@ -7,14 +7,8 @@ import { IDeviceInfo } from '../interfaces/device-info.interface';
 export class PlatformService {
 
     private _isJailbrake = false;
-
-    constructor(
-        private _device: Device,
-        private _platform: Platform,
-        private _ngZone: NgZone
-    ) {
-
-    }
+    private readonly _device: Device = inject(Device);
+    private readonly _platform: Platform = inject(Platform);
 
     /**
      * Is mobile indicator
@@ -65,7 +59,5 @@ export class PlatformService {
             serial: this._device.serial,
             uuid: this._device.uuid
         };
-
     }
-
 }
