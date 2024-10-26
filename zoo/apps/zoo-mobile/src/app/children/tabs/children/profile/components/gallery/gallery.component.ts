@@ -8,11 +8,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class GalleryComponent {
 
-    @Input()
-    public images: string[] = [];
-
-    protected get isOdd(): boolean {
-        return this.images.length % 2 !== 0;
-    }
+    @Input() images: string[] = [];
 
 }

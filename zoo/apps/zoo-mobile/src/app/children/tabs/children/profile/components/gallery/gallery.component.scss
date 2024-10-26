@@ -2,22 +2,23 @@
     display: grid;
     gap: 4px;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: 200px;
+    grid-auto-flow: dense;
     width: 100%;
 }
 
 .gallery-item {
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
     background-color: #f0f0f0;
 
     img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
     }
 
-    &.full-width {
+    &:nth-last-child(1):nth-child(odd) {
         grid-column: span 2;
     }
 }

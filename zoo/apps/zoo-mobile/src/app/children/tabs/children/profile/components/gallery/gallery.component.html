@@ -1,7 +1,7 @@
 <div class="gallery">
-    <div class="gallery-item"
-         *ngFor="let image of images; let i = index"
-         [class.full-width]="isOdd && i === images.length - 1"
+    <div
+        class="gallery-item"
+        *ngFor="let image of images; let i = index"
     >
         <img [src]="image" alt="Animal Image" />
     </div>
