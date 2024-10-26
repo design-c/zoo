@@ -1,6 +1,9 @@
-<div class="afisha-container">
-    <span class="afisha-text">Афиша</span>
-    <div class="afisha-icon">
-        <img src="assets/your-icon.png" alt="check icon" />
-    </div>
+<div class="checkbox-item">
+    <span class="checkbox-item__text">{{name}}</span>
+    <input
+        tuiCheckbox
+        type="checkbox"
+        [ngModel]="isSelected"
+        (ngModelChange)="isSelectedChange.emit($event)"
+    />
 </div>

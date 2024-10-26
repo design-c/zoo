@@ -8,7 +8,7 @@ import { INewsItem } from '../../interfaces/news-item.interface';
 })
 export class MainPage {
 
-    protected readonly carouselImages: string[] = ['osennie-kanikuly-24.jpg', 'zastavka-oktyabr-24.jpg', 'den-rozhdeniya-zooparka-2024-zastavka.jpg'];
+    protected readonly carouselImages: string[] = ['assets/osennie-kanikuly-24.jpg', 'assets/zastavka-oktyabr-24.jpg', 'assets/den-rozhdeniya-zooparka-2024-zastavka.jpg'];
 
     protected readonly newsItems: INewsItem[] = [
         {

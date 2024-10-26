@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfilePage } from './pages/profile/profile-page.component';
 import { CheckboxItemComponent } from './components/checkbox-item/checkbox-item.component';
+import { TuiCheckbox } from '@taiga-ui/kit';
+import { GalleryComponent } from './components/gallery/gallery.component';
 
 const routes: Routes = [
     {
@@ -19,8 +21,9 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes),
+        TuiCheckbox,
     ],
-    declarations: [ProfilePage, CheckboxItemComponent],
+    declarations: [ProfilePage, CheckboxItemComponent, GalleryComponent],
 })
 export class ProfileModule {
 }

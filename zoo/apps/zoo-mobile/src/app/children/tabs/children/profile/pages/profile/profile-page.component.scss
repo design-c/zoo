@@ -12,17 +12,30 @@ section {
     display: flex;
     flex-direction: column;
     gap: 8px;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-right: 24px;
+    }
+}
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 h3 {
     margin: 0;
     color: var(--color-primary);
     font-weight: 600;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 a {
     color: var(--text-primary);
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: underline;
 }

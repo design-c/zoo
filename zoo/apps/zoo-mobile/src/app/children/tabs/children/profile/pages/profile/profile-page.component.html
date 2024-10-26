@@ -1,9 +1,21 @@
-<ion-content [fullscreen]="true" [scrollY]="false">
+<ion-content [fullscreen]="true">
     <section class="user-info">
         <h3>Макар</h3>
         <a>Изменить имя</a>
     </section>
     <section class="user-settings">
         <h3>Push-уведомления</h3>
+        <div class="user-settings__container">
+            <app-checkbox-item *ngFor="let setting of settings"
+                               [name]="setting.name"
+                               [isSelected]="setting.isSelected"
+                               (click)="setting.isSelected = !setting.isSelected"
+            >
+            </app-checkbox-item>
+        </div>
+    </section>
+    <section class="gallery">
+        <h3>Галлерея</h3>
+        <app-gallery-component [images]="galleryImages"></app-gallery-component>
     </section>
 </ion-content>

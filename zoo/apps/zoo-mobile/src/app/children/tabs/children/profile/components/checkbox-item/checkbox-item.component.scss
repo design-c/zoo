@@ -1,20 +1,23 @@
-.afisha-container {
-    display: flex;
-    align-items: center;
+input[type="checkbox"] {
+    --t-radius: 2px !important;
+    --t-bg: var(--color-secondary) !important;
+    --tui-text-primary-on-accent-1: var(--color-primary) !important;
+    --t-bs: var(--color-primary) !important;
+    --tui-border-hover: var(--color-secondary) !important;
+    box-shadow: 0 0 0 2px var(--color-primary);
+    background-color: var(--color-secondary) !important;
 
-    .afisha-text {
-        font-size: 24px;
-        color: #424242;
+    &:checked {
+        box-shadow: 0 0 0 2px var(--color-primary); /* Добавит тень для выделения */
     }
+}
 
-    .afisha-icon {
-        margin-left: 10px;
-        width: 40px;
-        height: 40px;
+.checkbox-item {
+    display: flex;
+    justify-content: space-between;
 
-        img {
-            width: 100%;
-            height: auto;
-        }
+    &__text {
+        font-size: 18px;
+        color: var(--text-primary);
     }
 }

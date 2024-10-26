@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-checkbox-item',
@@ -7,6 +7,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
     styleUrls: ['checkbox-item.component.scss']
 })
 export class CheckboxItemComponent {
+
+    @Input()
+    public isSelected: boolean = true;
+
+    @Output()
+    public isSelectedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Input()
     public name?: string;
