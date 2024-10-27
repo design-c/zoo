@@ -1,0 +1,25 @@
+<form class="input-container">
+    <div #left class="icon-left">
+        <tui-icon
+            icon="assets/pin.svg"
+        />
+    </div>
+    <textarea
+        placeholder="Задай вопрос"
+        [(ngModel)]="questionText"
+        name="questionText"
+        #input
+        (input)="adjustElementHeight()"
+        rows="1">
+    </textarea>
+    <div #right class="icon-right">
+        <tui-icon
+            icon="assets/camera.svg"
+        />
+        <tui-icon
+            [class.disable]="!questionText"
+            class="send-icon"
+            icon="assets/taiga-ui/icons/send-horizontal.svg"
+        />
+    </div>
+</form>

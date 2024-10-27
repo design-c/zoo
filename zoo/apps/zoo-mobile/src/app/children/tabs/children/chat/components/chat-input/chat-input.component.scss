@@ -1,0 +1,54 @@
+.input-container {
+    display: flex;
+    align-items: flex-end;
+    border: 2px solid var(--chat-color);
+    padding: 12px;
+    width: 100%;
+    color: var(--text-primary);
+}
+
+.send-icon {
+    color: var(--text-secondary);
+
+    &.disable {
+        opacity: 0.5;
+    }
+}
+
+textarea {
+    flex: 1;
+    resize: none;
+    overflow: hidden;
+    font-size: inherit;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+    box-shadow: none;
+    display: flex;
+    align-items: flex-end; /* Текст внизу */
+    margin-right: 10px;
+
+    &::placeholder {
+        vertical-align: middle;
+        display: block;
+        width: 100%;
+    }
+
+    &:focus {
+        border: none;
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+.icon-left {
+    align-self: flex-start;
+    margin-right: 12px;
+}
+
+.icon-right {
+    align-self: flex-start;
+    display: flex;
+    gap: 10px;
+}
