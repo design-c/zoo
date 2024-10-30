@@ -1,5 +1,4 @@
 export interface IAuthResponseModel {
-    readonly token: string;
-    readonly refreshToken: string;
-    readonly expiresAt?: Date;
+    readonly accessToken: string;
+    readonly expiresIn?: number;
 }

@@ -1,4 +1,5 @@
 export interface IAuthRequestModel {
-    readonly email: string;
+    readonly login: string;
     readonly password: string;
+    readonly role: 'user';
 }

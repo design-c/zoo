@@ -1,26 +1,24 @@
 import { inject, Injectable } from '@angular/core';
-import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
-import { HttpOptions, HttpResponse } from '@capacitor/core';
 import { map, switchMap } from 'rxjs/operators';
 import { TokenAuthModel } from '../models/token-auth.model';
 import { IDP_ENDPOINT } from '../token/idp-endpoint.token';
 import { IAuthRequestModel } from '../request-models/auth.request-model';
 import { IAuthResponseModel } from '../response-models/auth.response-model';
 import { IRefreshTokenRequestModel } from '../request-models/refresh-token.request-model';
-import { AnonymousHttpRequestService } from './nttp-request.service';
 import { NativeStorageService } from '../../native-storage/services/native-storage.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class IdpManagerService {
 
-    protected readonly requestService: AnonymousHttpRequestService = inject(AnonymousHttpRequestService);
+    protected readonly requestService: HttpClient = inject(HttpClient);
     protected readonly idpEndpoint: string = inject(IDP_ENDPOINT);
     protected readonly nativeStorage: NativeStorageService = inject(NativeStorageService);
 
-    protected expiresAt?: Date;
+    protected expiresIn?: number;
     protected token?: string;
-    protected refreshToken?: string;
 
     public login(model: LoginModel): Observable<boolean> {
         const dto: IAuthRequestModel = model.toDTO();
@@ -28,10 +26,9 @@ export class IdpManagerService {
         return this.getCredentials(dto)
             .pipe(
                 map((credentials: IAuthResponseModel | undefined) => {
-                    if (credentials && credentials.token) {
-                        this.token = credentials.token;
-                        this.refreshToken = credentials.refreshToken;
-                        this.expiresAt = credentials.expiresAt;
+                    if (credentials && credentials.accessToken) {
+                        this.token = credentials.accessToken;
+                        this.expiresIn = credentials.expiresIn;
                         this.setToken(credentials);
 
                         return true;
@@ -48,10 +45,9 @@ export class IdpManagerService {
         return this.refreshCredentials(dto)
             .pipe(
                 map((credentials: IAuthResponseModel | undefined) => {
-                    if (credentials && credentials.token) {
-                        this.token = credentials.token;
-                        this.refreshToken = credentials.refreshToken;
-                        this.expiresAt = credentials.expiresAt;
+                    if (credentials && credentials.accessToken) {
+                        this.token = credentials.accessToken;
+                        this.expiresIn = credentials.expiresIn;
                         this.setToken(credentials);
 
                         return true;
@@ -68,12 +64,9 @@ export class IdpManagerService {
      * @returns  boolean
      */
     public isAuthorized(): Observable<boolean> {
-        return forkJoin([
-            this.nativeStorage.getByKey('token'),
-            this.nativeStorage.getByKey('refreshToken')
-        ])
+        return this.nativeStorage.getByKey('token')
             .pipe(
-                map((tokenArray: [string | null, string | null]) => tokenArray.every((token: string | null) => !!token)),
+                map((token: string | null) => !!token),
             );
     }
 
@@ -83,12 +76,9 @@ export class IdpManagerService {
      * @returns TokenAuthModel
      */
     public getToken(): Observable<TokenAuthModel | null> {
-        return forkJoin({
-            token: this.nativeStorage.getByKey('token'),
-            refreshToken: this.nativeStorage.getByKey('refreshToken'),
-        })
+        return this.nativeStorage.getByKey('token')
             .pipe(
-                map(({ token, refreshToken }) => new TokenAuthModel(token || this.token!, refreshToken || this.refreshToken!)),
+                map((token) => new TokenAuthModel(token!)),
             );
     }
 
@@ -101,17 +91,14 @@ export class IdpManagerService {
     }
 
     public refreshTokens(): Observable<void> {
-        return combineLatest([
-            this.nativeStorage.getByKey('token'),
-            this.nativeStorage.getByKey('refreshToken')
-        ])
+        return this.nativeStorage.getByKey('token')
             .pipe(
-                map(([token, refreshToken]: [string | null, string | null]) => {
-                    if (!token || !refreshToken) {
+                map((token: string | null) => {
+                    if (!token) {
                         throw new Error();
                     }
 
-                    return new TokenAuthModel(token, refreshToken);
+                    return new TokenAuthModel(token);
                 }),
                 switchMap((tokens: TokenAuthModel) => this.refresh(tokens)),
                 map(() => void 0)
@@ -125,8 +112,7 @@ export class IdpManagerService {
      * @protected
      */
     protected setToken(credentials: IAuthResponseModel): void {
-        this.nativeStorage.setByKey('refreshToken', credentials.refreshToken);
-        this.nativeStorage.setByKey('token', credentials.token);
+        this.nativeStorage.setByKey('token', credentials.accessToken);
     }
 
     /**
@@ -137,22 +123,9 @@ export class IdpManagerService {
      * @protected
      */
     protected getCredentials(dto: IAuthRequestModel): Observable<IAuthResponseModel> {
-        const options: HttpOptions = {
-            url: `${ this.idpEndpoint }api/public/v1/Auth/login`,
-            data: dto,
+        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/public/v1/Auth/login`, dto, {
             responseType: 'json',
-        };
-
-        return this.requestService.request(options)
-            .pipe(
-                map((response: HttpResponse) => {
-                    if (response.data && response.status === 200) {
-                        return response.data as IAuthResponseModel;
-                    }
-
-                    throw new Error(String(response.data));
-                }),
-            );
+        });
     }
 
     /**
@@ -163,21 +136,8 @@ export class IdpManagerService {
      * @protected
      */
     protected refreshCredentials(dto: IRefreshTokenRequestModel): Observable<IAuthResponseModel> {
-        const options: HttpOptions = {
-            url: `${ this.idpEndpoint }api/public/v1/Auth/refresh_token`,
-            data: dto,
+        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/public/v1/Auth/refresh_token`, dto, {
             responseType: 'json',
-        };
-
-        return this.requestService.request(options)
-            .pipe(
-                map((response: HttpResponse) => {
-                    if (response.data && response.status === 200) {
-                        return response.data as IAuthResponseModel;
-                    }
-
-                    throw new Error(String(response.data));
-                }),
-            );
+        });
     }
 }

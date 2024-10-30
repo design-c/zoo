@@ -2,7 +2,7 @@ import { IAuthRequestModel } from '../request-models/auth.request-model';
 
 export class LoginModel {
     constructor(
-        public readonly email: string,
+        public readonly login: string,
         public readonly password: string
     ) {
     }
@@ -10,7 +10,8 @@ export class LoginModel {
     public toDTO(): IAuthRequestModel {
         return {
             password: this.password,
-            email: this.email,
+            login: this.login,
+            role: 'user',
         };
     }
 }
