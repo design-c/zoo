@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from '../../../entities/base.entity';
+import { BaseEntity } from '../../entities';
 
 export enum AttachmentType {
     image = 'image',
@@ -8,7 +8,7 @@ export enum AttachmentType {
 }
 
 @Schema()
-export class ChatAttachment extends BaseEntity {
+export class FileStorage extends BaseEntity {
     @ApiProperty({ example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...', description: 'Контент вложения в Base64' })
     @Prop({ required: true })
     public readonly content: string;
@@ -18,4 +18,4 @@ export class ChatAttachment extends BaseEntity {
     public readonly type: AttachmentType;
 }
 
-export const ChatAttachmentSchema = SchemaFactory.createForClass(ChatAttachment);
+export const FileStorageSchema = SchemaFactory.createForClass(FileStorage);

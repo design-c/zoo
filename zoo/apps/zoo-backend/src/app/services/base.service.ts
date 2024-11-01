@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { Document, FilterQuery, Model } from 'mongoose';
+import { Document, FilterQuery, Model, Types } from 'mongoose';
 
 export abstract class Service<T extends Document> {
     protected readonly modelName: string;
@@ -43,8 +43,8 @@ export abstract class Service<T extends Document> {
      * @param zooId - Опциональный параметр для фильтрации по zooId.
      * @returns Промис, который возвращает массив найденных документов.
      */
-    public async findAll(zooId?: string): Promise<T[]> {
-        return this.model.find(zooId ? { zooId } : {}).exec();
+    public async findAll(zooId: string | Types.ObjectId): Promise<T[]> {
+        return this.model.find({ zooId }).exec();
     }
 
     /**
@@ -52,7 +52,7 @@ export abstract class Service<T extends Document> {
      * @param id - Идентификатор записи.
      * @returns Промис, который возвращает найденный документ или выбрасывает исключение, если документ не найден.
      */
-    public async findById(id: string): Promise<T> {
+    public async findById(id: string | Types.ObjectId): Promise<T> {
         const document = await this.model.findById(id).exec();
         if (!document) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);
@@ -76,7 +76,7 @@ export abstract class Service<T extends Document> {
      * @param updateDto - DTO с обновленными данными.
      * @returns Промис, который возвращает обновленный документ или выбрасывает исключение, если документ не найден.
      */
-    public async update(id: string, updateDto: Partial<T>): Promise<T> {
+    public async update(id: string | Types.ObjectId, updateDto: Partial<T>): Promise<T> {
         const updatedDocument = await this.model.findByIdAndUpdate(id, updateDto, {
             new: true,
         }).exec();
@@ -92,7 +92,7 @@ export abstract class Service<T extends Document> {
      * @param id - Идентификатор записи.
      * @returns Промис, который завершится, когда запись будет удалена, или выбросит исключение, если запись не найдена.
      */
-    public async delete(id: string): Promise<void> {
+    public async delete(id: string | Types.ObjectId): Promise<void> {
         const result = await this.model.findByIdAndDelete(id).exec();
         if (!result) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);

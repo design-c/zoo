@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BaseEntity } from '../../../entities/base.entity';
+import { BaseEntity } from '../../../entities';
 import { UserRole } from '../enums';
 import { ApiProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 
 @Schema()
-export class UserModel extends BaseEntity {
+export class User extends BaseEntity {
 
     @ApiProperty({
         example: 'user123',
@@ -42,4 +42,4 @@ export class UserModel extends BaseEntity {
     public readonly zooId: Types.ObjectId;
 }
 
-export const UserSchema = SchemaFactory.createForClass(UserModel);
+export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto, LoginUserDto, UserDto, UserModel } from '../users';
+import { CreateUserDto, LoginUserDto, UserDto, User, UsersService } from '../../shared';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { IConfiguration, IJwtConfig } from '../../config/configuration';
 import { AccessTokenDto, JwtPayloadDto, LoginStatusDto, RegistrationStatusDto } from './dto';
@@ -66,7 +65,7 @@ export class AuthService {
      * @param user - Data Transfer Object containing user login information
      * @returns IAccessToken - Object containing the access token and its expiration time
      */
-    private _createToken({ login, zooId, _id }: UserModel): AccessTokenDto {
+    private _createToken({ login, zooId, _id }: User): AccessTokenDto {
         const expiresIn = this._configService.get<IJwtConfig>('jwt').expiresIn;
         const accessToken = this._jwtService.sign({ login, zooId, id: _id });
 

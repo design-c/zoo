@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+    mobile-app:
+        container_name: 'mobile-app'
+        extends:
+            file: docker-compose.base.yml
+            service: nx-app-base
+        env_file:
+            - .env
+        command: npx nx serve zoo-mobile --host 0.0.0.0
+        ports:
+            - "1458:4200"
+
     backend:
         container_name: 'backend'
         extends:

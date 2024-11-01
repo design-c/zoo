@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AnimalModule, AuthModule, FaqModule, UsersModule } from './modules';
+import { AnimalModule, AuthModule, ChatModule, FaqModule, UserModule, ZooModule } from './modules';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
-import { DatabaseModule } from './shared/database.module';
+import { DatabaseModule } from './shared';
 
 @Module({
     imports: [
@@ -14,10 +14,10 @@ import { DatabaseModule } from './shared/database.module';
         // routing
         FaqModule,
         AnimalModule,
-//        ZooModule,
-//        ChatModule,
-        UsersModule,
-        AuthModule
+        ZooModule,
+        ChatModule,
+        UserModule,
+        AuthModule,
     ],
 })
 export class AppModule {

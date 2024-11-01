@@ -4,21 +4,14 @@ import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/s
 import { CreateUpdateZooDto, PhotoFilterDto } from './dto';
 import { Zoo } from './entities/zoo.entity';
 import { AuthRoles } from '../auth/guards';
-import { UserRole } from '../users';
+import { UserRole } from '../../shared';
 
 @ApiTags('Zoo')
 @Controller('zoo')
 @AuthRoles(UserRole.admin)
 export class ZooController {
-    constructor(private readonly zooService: ZooService) {}
-
-    @Get()
-    @ApiOperation({ summary: 'Получить информацию о зоопарке' })
-    @ApiResponse({ status: 200, description: 'Информация о зоопарке.', type: Zoo })
-    async getZoo() {
-        return await this.zooService.findAll();
+    constructor(private readonly zooService: ZooService) {
     }
-
 
     @Get(':id')
     @AuthRoles(UserRole.user)

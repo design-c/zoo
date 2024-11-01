@@ -1,4 +1,4 @@
-import { ROLE_RULES, UserRole } from '../../users';
+import { ROLE_RULES, UserRole } from '../../../shared';
 import { CanActivate, ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
