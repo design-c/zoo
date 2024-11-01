@@ -3,13 +3,7 @@ version: '3.7'
 services:
     mobile:
         container_name: 'mobile-app'
-        extends:
-            file: docker-compose.base.yml
-            service: nx-angular-base
-        env_file:
-            - .env
-        environment:
-            - PROJECT=zoo-mobile
+        image: zuppi/zoo-mobile:latest
         ports:
             - "1458:80"
 
