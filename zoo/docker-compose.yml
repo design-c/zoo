@@ -8,7 +8,7 @@ services:
             service: nx-app-base
         env_file:
             - .env
-        command: npx nx serve zoo-mobile --host 0.0.0.0
+        command: npx nx serve zoo-mobile --host 0.0.0.0 --disable-host-check
         ports:
             - "1458:4200"
 
