@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from '../../entities';
+import { Types } from 'mongoose';
 
-export enum AttachmentType {
+export enum FileType {
     image = 'image',
     audio = 'audio',
 }
@@ -13,9 +14,13 @@ export class FileStorage extends BaseEntity {
     @Prop({ required: true })
     public readonly content: string;
 
-    @ApiProperty({ example: 'image', description: 'Тип вложения', enum: AttachmentType })
-    @Prop({ required: true, enum: AttachmentType })
-    public readonly type: AttachmentType;
+    @ApiProperty({ example: 'image', description: 'Тип вложения', enum: FileType })
+    @Prop({ required: true, enum: FileType })
+    public readonly type: FileType;
+
+    @ApiProperty({ example: '60d21b4667d0d8992e610c85', description: 'ID зоопарка', type: String })
+    @Prop({ type: Types.ObjectId, required: false })
+    public readonly zooId: Types.ObjectId;
 }
 
 export const FileStorageSchema = SchemaFactory.createForClass(FileStorage);

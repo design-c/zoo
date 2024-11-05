@@ -45,4 +45,10 @@ export class CreateUpdateZooDto {
         example: 'Нельзя кормить животных!'
     })
     public readonly rules: string;
+
+    @ApiProperty({
+        description: 'Id главной фотографии зоопарка',
+        example: '672a6cf8093988b4eef41ba2'
+    })
+    public readonly photoId: string;
 }

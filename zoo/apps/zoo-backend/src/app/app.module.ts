@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AnimalModule, AuthModule, ChatModule, FaqModule, UserModule, ZooModule } from './modules';
+import { AnimalModule, AuthModule, ChatModule, FaqModule, FileModule, UserModule, ZooModule } from './modules';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { DatabaseModule } from './shared';
@@ -18,6 +18,7 @@ import { DatabaseModule } from './shared';
         ChatModule,
         UserModule,
         AuthModule,
+        FileModule
     ],
 })
 export class AppModule {

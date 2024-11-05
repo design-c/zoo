@@ -12,7 +12,7 @@ import { Types } from 'mongoose';
 @Controller('zoo/:zooId/faq')
 @AuthRoles(UserRole.admin)
 export class FAQController {
-    constructor(private readonly faqService: FAQService) {
+    constructor(private readonly _faqService: FAQService) {
     }
 
     @Get()
@@ -20,7 +20,7 @@ export class FAQController {
     @ApiOperation({ summary: 'Получить все вопросы и ответы' })
     @ApiResponse({ status: 200, description: 'Список всех FAQ.', type: FAQ, isArray: true })
     async getAllFAQs(@Param('zooId') zooId: string) {
-        return await this.faqService.findAll(zooId);
+        return await this._faqService.findAll({ zooId });
     }
 
     @Get(':id')
@@ -28,7 +28,7 @@ export class FAQController {
     @ApiResponse({ status: 200, description: 'FAQ найдено.', type: FAQ })
     @ApiResponse({ status: 404, description: 'FAQ не найдено.' })
     async getFAQById(@Param('zooId') zooId: Types.ObjectId, @Param('id') id: string) {
-        return await this.faqService.findById(id);
+        return await this._faqService.findById(id);
     }
 
     @Post()
@@ -37,7 +37,7 @@ export class FAQController {
     @ApiBody({ type: CreateUpdateFaqDto })
     @ApiResponse({ status: 201, description: 'FAQ создано.', type: FAQ })
     async createFAQ(@Param('zooId') zooId: Types.ObjectId, @Body() createFAQDto: CreateUpdateFaqDto) {
-        return await this.faqService.create({ ...createFAQDto, zooId });
+        return await this._faqService.create({ ...createFAQDto, zooId });
     }
 
     @Put(':id')
@@ -46,7 +46,7 @@ export class FAQController {
     @ApiResponse({ status: 200, description: 'FAQ обновлено.', type: FAQ })
     @ApiResponse({ status: 404, description: 'FAQ не найдено.' })
     async updateFAQ(@Param('zooId') zooId: Types.ObjectId, @Param('id') id: string, @Body() updateFAQDto: CreateUpdateFaqDto) {
-        return await this.faqService.update(id, updateFAQDto);
+        return await this._faqService.update(id, updateFAQDto);
     }
 
     @Delete(':id')
@@ -55,6 +55,6 @@ export class FAQController {
     @ApiResponse({ status: 204, description: 'FAQ удалено.' })
     @ApiResponse({ status: 404, description: 'FAQ не найдено.' })
     async deleteFAQ(@Param('zooId') zooId: Types.ObjectId, @Param('id') id: string) {
-        await this.faqService.delete(id)
+        await this._faqService.delete(id)
     }
 }

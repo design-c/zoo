@@ -4,10 +4,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './models';
 import { Model } from 'mongoose';
 import { compare, genSalt, hash } from 'bcrypt';
-import { Service } from '../../services/base.service';
+import { MongoService } from '../../services';
 
 @Injectable()
-export class UsersService extends Service<User> {
+export class UsersService extends MongoService<User> {
     private readonly _saltRounds: number = 10;
 
     constructor(

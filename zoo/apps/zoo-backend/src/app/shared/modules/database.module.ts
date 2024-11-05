@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import mongoose from 'mongoose';
-import { toJSONPlugin } from '../plugins/to-json.plugin';
+import { toJSONPlugin } from '../../plugins/to-json.plugin';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { IConfiguration, IDatabaseConfig } from '../config/configuration';
+import { IConfiguration, IDatabaseConfig } from '../../config/configuration';
 
 mongoose.plugin(toJSONPlugin);
 
