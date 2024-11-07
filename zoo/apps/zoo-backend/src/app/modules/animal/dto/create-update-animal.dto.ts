@@ -9,4 +9,7 @@ export class CreateUpdateAnimalDto {
 
     @ApiProperty({ description: 'Описание животного', example: 'Большой тигр из Сибири' })
     public readonly description: string;
+
+    @ApiProperty({ description: 'Id главной фотографии зоопарка', example: '672a6cf8093988b4eef41ba2' })
+    public readonly photoId: string;
 }

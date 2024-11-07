@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserRole } from '../users';
+import { FileStorage, FileStorageService, UserRole } from '../../shared';
 import { AuthRoles } from '../auth/guards';
 import { CreateChatDto } from './dto';
 import { ChatService } from './services';
@@ -9,12 +9,13 @@ import { AccessTokenInterface } from '../auth/interfaces';
 
 
 @ApiTags('Chat')
-@Controller('chat')
+@Controller('chat/:zooId')
 @AuthRoles(UserRole.user)
 export class ChatController {
 
     constructor(
         private readonly _chatService: ChatService,
+        private readonly _storage: FileStorageService
     ) {
     }
 
@@ -35,7 +36,7 @@ export class ChatController {
     @ApiOperation({ summary: 'Получить все чаты пользователя' })
     @ApiResponse({ status: 200, description: 'Список всех FAQ.', type: Chat, isArray: true })
     public async getAllChats() {
-        return await this._chatService.findAll();
+        return [];
     }
 
     @Post()

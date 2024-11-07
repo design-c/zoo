@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ChatAttachmentService, ChatMessageService, ChatService } from '../services';
+import { ChatMessageService, ChatService } from '../services';
 import { Chat, ChatMessage } from '../entities';
 import { Zoo } from '../../zoo/entities/zoo.entity';
 import { Types } from 'mongoose';
 import { ZooService } from '../../zoo/services';
+import { FileStorageService } from '../../../shared';
 
 
 @Injectable()
@@ -15,8 +16,8 @@ export class ChatManagerService {
     constructor(
         private readonly _chatService: ChatService,
         private readonly _chatMessageService: ChatMessageService,
-        private readonly _chatAttachmentService: ChatAttachmentService,
-        private readonly _zooService: ZooService,
+        private readonly _chatAttachmentService: FileStorageService,
+//        private readonly _zooService: ZooService,
     ) {
     }
 

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from '../../../entities/base.entity';
+import { BaseEntity } from '../../../shared';
 
 @Schema()
 export class ChatBtn extends BaseEntity {

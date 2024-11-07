@@ -1,6 +1,12 @@
 version: '3.7'
 
 services:
+    mobile:
+        container_name: 'mobile-app'
+        image: zuppi/zoo-mobile:latest
+        ports:
+            - "1458:80"
+
     backend:
         container_name: 'backend'
         extends:

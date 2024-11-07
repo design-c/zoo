@@ -8,3 +8,9 @@ services:
             dockerfile: Dockerfile
         environment:
             - DEV_PLATFORM=DOCKER
+    nx-angular-base:
+        build:
+            context: .
+            dockerfile: Angular.Dockerfile
+        environment:
+            - DEV_PLATFORM=DOCKER

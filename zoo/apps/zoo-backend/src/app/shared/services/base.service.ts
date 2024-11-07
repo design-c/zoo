@@ -1,7 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
-import { Document, FilterQuery, Model } from 'mongoose';
+import { Document, FilterQuery, Model, Types } from 'mongoose';
+import { IFilterAll } from '../interfaces';
+import { clearObj } from '../utils';
 
-export abstract class Service<T extends Document> {
+
+export abstract class MongoService<T extends Document> {
     protected readonly modelName: string;
 
     constructor(
@@ -39,21 +42,35 @@ export abstract class Service<T extends Document> {
     }
 
     /**
-     * Возвращает список всех записей, с возможностью фильтрации по zooId.
-     * @param zooId - Опциональный параметр для фильтрации по zooId.
+     * Возвращает список записей с возможностью фильтрации и сортировки.
+     * @param filters - Объект с опциональными параметрами фильтрации.
+     *                  Включает zooId, limit, offset, sort и date.
      * @returns Промис, который возвращает массив найденных документов.
      */
-    public async findAll(zooId?: string): Promise<T[]> {
-        return this.model.find(zooId ? { zooId } : {}).exec();
+    public async findAll(filters?: IFilterAll): Promise<T[]> {
+        const { zooId, limit = 25, offset = 0, sort = 'desc', userId, fields, ...other } = filters ?? {};
+        const query: FilterQuery<IFilterAll> = clearObj({ zooId, userId, ...other });
+        const sortOption: Record<string, 1 | -1> = { createdAt: sort === 'asc' ? 1 : -1 };
+
+        return this.model
+            .find(query)
+            .select(fields)
+            .sort(sortOption)
+            .skip(offset)
+            .limit(limit)
+            .exec();
     }
 
     /**
      * Находит запись по ее ID.
      * @param id - Идентификатор записи.
+     * @param fields поля финального объекта
      * @returns Промис, который возвращает найденный документ или выбрасывает исключение, если документ не найден.
      */
-    public async findById(id: string): Promise<T> {
-        const document = await this.model.findById(id).exec();
+    public async findById(id: string | Types.ObjectId, fields?: string[]): Promise<T> {
+        const document = await this.model.findById(id)
+            .select(fields)
+            .exec();
         if (!document) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);
         }
@@ -76,7 +93,7 @@ export abstract class Service<T extends Document> {
      * @param updateDto - DTO с обновленными данными.
      * @returns Промис, который возвращает обновленный документ или выбрасывает исключение, если документ не найден.
      */
-    public async update(id: string, updateDto: Partial<T>): Promise<T> {
+    public async update(id: string | Types.ObjectId, updateDto: Partial<T>): Promise<T> {
         const updatedDocument = await this.model.findByIdAndUpdate(id, updateDto, {
             new: true,
         }).exec();
@@ -92,7 +109,7 @@ export abstract class Service<T extends Document> {
      * @param id - Идентификатор записи.
      * @returns Промис, который завершится, когда запись будет удалена, или выбросит исключение, если запись не найдена.
      */
-    public async delete(id: string): Promise<void> {
+    public async delete(id: string | Types.ObjectId): Promise<void> {
         const result = await this.model.findByIdAndDelete(id).exec();
         if (!result) {
             throw new NotFoundException(`${this.modelName} с ID ${id} не найден`);
