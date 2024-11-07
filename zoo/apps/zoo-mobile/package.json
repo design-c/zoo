@@ -1,9 +1,11 @@
 {
     "name": "zoo-mobile",
     "devDependencies": {
+        "@capacitor/cli": "^6.0.3",
         "@capacitor/android": "../../node_modules/@capacitor/android",
-        "@capacitor/cli": "../../node_modules/@capacitor/cli",
-        "@capacitor/ios": "../../node_modules/@capacitor/ios",
+        "@capacitor/ios": "../../node_modules/@capacitor/ios"
+    },
+    "dependencies": {
         "@awesome-cordova-plugins/device": "../../node_modules/@awesome-cordova-plugins/device",
         "@capacitor/preferences": "../../node_modules/@capacitor/preferences",
         "@capacitor/splash-screen": "../../node_modules/@capacitor/splash-screen"
