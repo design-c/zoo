@@ -1,4 +1,4 @@
-import { IAuthRequestModel } from '../request-models/auth.request-model';
+import { IRegisterRequestModel } from '../request-models/register.request-model';
 
 export class LoginModel {
     constructor(
@@ -7,7 +7,7 @@ export class LoginModel {
     ) {
     }
 
-    public toDTO(): IAuthRequestModel {
+    public toDTO(): IRegisterRequestModel {
         return {
             password: this.password,
             login: this.login,

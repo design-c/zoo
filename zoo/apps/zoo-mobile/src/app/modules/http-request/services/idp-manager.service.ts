@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { TokenAuthModel } from '../models/token-auth.model';
 import { IDP_ENDPOINT } from '../token/idp-endpoint.token';
 import { IAuthRequestModel } from '../request-models/auth.request-model';
 import { IAuthResponseModel } from '../response-models/auth.response-model';
-import { IRefreshTokenRequestModel } from '../request-models/refresh-token.request-model';
 import { NativeStorageService } from '../../native-storage/services/native-storage.service';
 import { HttpClient } from '@angular/common/http';
+import { IRegisterRequestModel } from '../request-models/register.request-model';
 
 @Injectable()
 export class IdpManagerService {
@@ -21,28 +21,9 @@ export class IdpManagerService {
     protected token?: string;
 
     public login(model: LoginModel): Observable<boolean> {
-        const dto: IAuthRequestModel = model.toDTO();
+        const dto: IRegisterRequestModel = model.toDTO();
 
-        return this.getCredentials(dto)
-            .pipe(
-                map((credentials: IAuthResponseModel | undefined) => {
-                    if (credentials && credentials.accessToken) {
-                        this.token = credentials.accessToken;
-                        this.expiresIn = credentials.expiresIn;
-                        this.setToken(credentials);
-
-                        return true;
-                    }
-
-                    return false;
-                }),
-            );
-    }
-
-    public refresh(model: TokenAuthModel): Observable<boolean> {
-        const dto: IRefreshTokenRequestModel = model.toDTO();
-
-        return this.refreshCredentials(dto)
+        return this.registerRequest(dto)
             .pipe(
                 map((credentials: IAuthResponseModel | undefined) => {
                     if (credentials && credentials.accessToken) {
@@ -90,21 +71,6 @@ export class IdpManagerService {
         this.nativeStorage.removeByKey('refreshToken');
     }
 
-    public refreshTokens(): Observable<void> {
-        return this.nativeStorage.getByKey('token')
-            .pipe(
-                map((token: string | null) => {
-                    if (!token) {
-                        throw new Error();
-                    }
-
-                    return new TokenAuthModel(token);
-                }),
-                switchMap((tokens: TokenAuthModel) => this.refresh(tokens)),
-                map(() => void 0)
-            );
-    }
-
     /**
      * Сохранение рефреш токена
      *
@@ -116,27 +82,27 @@ export class IdpManagerService {
     }
 
     /**
+     * Лоигн
+     *
+     * @param dto ILoginRequestModel
+     * @returns Observable<IAuthResponseModel>
+     * @protected
+     */
+    protected loginRequest(dto: IAuthRequestModel): Observable<IAuthResponseModel> {
+        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/auth/login`, dto, {
+            responseType: 'json',
+        });
+    }
+
+    /**
      * Получение токенов
      *
      * @param dto ILoginRequestModel
      * @returns Observable<IAuthResponseModel>
      * @protected
      */
-    protected getCredentials(dto: IAuthRequestModel): Observable<IAuthResponseModel> {
-        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/public/v1/Auth/login`, dto, {
-            responseType: 'json',
-        });
-    }
-
-    /**
-     * Восстановление токенов
-     *
-     * @param dto ILoginRequestModel
-     * @returns Observable<IAuthResponseModel>
-     * @protected
-     */
-    protected refreshCredentials(dto: IRefreshTokenRequestModel): Observable<IAuthResponseModel> {
-        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/public/v1/Auth/refresh_token`, dto, {
+    protected registerRequest(dto: IRegisterRequestModel): Observable<IAuthResponseModel> {
+        return this.requestService.post<IAuthResponseModel>(`${ this.idpEndpoint }api/auth/register`, dto, {
             responseType: 'json',
         });
     }
