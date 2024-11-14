@@ -1,15 +1,15 @@
-import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FileStorage, FileStorageService, UserRole } from '../../shared';
+import { Controller, Get, HttpCode, Param, Post, Req } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileStorageService, UserRole } from '../../shared';
 import { AuthRoles } from '../auth/guards';
-import { CreateChatDto } from './dto';
 import { ChatService } from './services';
 import { Chat } from './entities';
 import { AccessTokenInterface } from '../auth/interfaces';
+import { Types } from 'mongoose';
 
 
 @ApiTags('Chat')
-@Controller('chat/:zooId')
+@Controller('zoo/chat')
 @AuthRoles(UserRole.user)
 export class ChatController {
 
@@ -19,8 +19,8 @@ export class ChatController {
     ) {
     }
 
-    @Get('ws')
-    @ApiOperation({ summary: 'Подключение к WebSocket' })
+    @Get()
+    @ApiOperation({ summary: 'Подключение к socket.io' })
     @ApiResponse({
         status: 101,
         description: 'Переключение протоколов - успешное установление WebSocket-соединения.' +
@@ -39,15 +39,15 @@ export class ChatController {
         return [];
     }
 
-    @Post()
+    @Post(':zooId')
     @HttpCode(201)
+    @ApiParam({ name: 'zooId', description: 'ID зоопарка', type: String })
     @ApiOperation({ summary: 'Создать чат в зоопарке' })
-    @ApiBody({ type: CreateChatDto })
     @ApiResponse({ status: 201, description: 'Зоопарк создан.', type: Chat })
     public async createChat(
-        @Body() createChatDto: CreateChatDto,
+        @Param('zooId') zooId: Types.ObjectId,
         @Req() req: { user: AccessTokenInterface }
     ) {
-        return await this._chatService.create({ zooId: createChatDto.zooId, userId: req.user.id });
+        return await this._chatService.create({ zooId: zooId, userId: req.user.id });
     }
 }

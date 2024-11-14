@@ -6,13 +6,13 @@ import { ChatMessage } from './entities';
 import { InitChatDto } from './dto/init-chat.dto';
 
 
-@WebSocketGateway({ path: '/chat/ws' })
+@WebSocketGateway({ path: '/api/chat' })
 export class ChatGateway  {
     @WebSocketServer()
     private readonly _server: Server;
 
     constructor(
-        private readonly _chatService: ChatManagerService
+//        private readonly _chatService: ChatManagerService
     ) {
     }
 
@@ -21,9 +21,9 @@ export class ChatGateway  {
         @ConnectedSocket() client: Socket,
         @MessageBody() data: InitChatDto,
     ) {
-        const message = await this._chatService.init(data.id)
+//        const message = await this._chatService.init(data.id)
 
-        await this._answer(client, message);
+//        await this._answer(client, message);
     }
 
     @SubscribeMessage('message')
@@ -32,9 +32,12 @@ export class ChatGateway  {
         @MessageBody() data: GetMessageDto,
     ) {
         const { text, attachments } = data;
-        const message = await this._chatService.handleMessage(text, attachments);
+//        const message = await this._chatService.handleMessage(text, attachments);
 
-        await this._answer(client, message);
+//        await this._answer(client, message);
+
+        this._server.to(client.id)
+            .emit('message', 'pong')
     }
 
     @SubscribeMessage('buttonClick')
@@ -42,9 +45,9 @@ export class ChatGateway  {
         @ConnectedSocket() client: Socket,
         @MessageBody() data: { buttonId: string },
     ) {
-        const button = await this._chatService.handleButton(data.buttonId);
+//        const button = await this._chatService.handleButton(data.buttonId);
 
-        await this._answer(client, button);
+//        await this._answer(client, button);
     }
 
     private async _answer(client: Socket, message: ChatMessage): Promise<void> {

@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, Logger, Param, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Req } from '@nestjs/common';
 import { ZooService } from './services';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUpdateZooDto } from './dto';
 import { Zoo } from './entities/zoo.entity';
 import { AuthRoles } from '../auth/guards';
 import { FileStorageService, LimitQueryDto, UserQueryDto, UserRole } from '../../shared';
+import { Types } from 'mongoose';
 
 @ApiTags('Zoo')
 @Controller('zoo')
@@ -27,10 +28,10 @@ export class ZooController {
     @Get(':id')
     @AuthRoles(UserRole.user)
     @ApiOperation({ summary: 'Получить зоопарк по ID' })
-    @ApiParam({ name: 'id', description: 'ID зоопарка' })
+    @ApiParam({ name: 'id', description: 'ID зоопарка', type: String })
     @ApiResponse({ status: 200, description: 'Зоопарк найден.', type: Zoo })
     @ApiResponse({ status: 404, description: 'Зоопарк не найден.' })
-    async getZooById(@Param('id') id: string) {
+    async getZooById(@Param('id') id: Types.ObjectId) {
         return await this._zooService.findById(id);
     }
 
@@ -45,21 +46,21 @@ export class ZooController {
 
     @Put(':id')
     @ApiOperation({ summary: 'Обновить информацию о зоопарке' })
-    @ApiParam({ name: 'id', description: 'ID зоопарка' })
+    @ApiParam({ name: 'id', description: 'ID зоопарка', type: String })
     @ApiBody({ type: CreateUpdateZooDto })
     @ApiResponse({ status: 200, description: 'Зоопарк обновлен.', type: Zoo })
     @ApiResponse({ status: 404, description: 'Зоопарк не найден.' })
-    async updateZoo(@Param('id') id: string, @Body() updateZooDto: CreateUpdateZooDto) {
+    async updateZoo(@Param('id') id: Types.ObjectId, @Body() updateZooDto: CreateUpdateZooDto) {
         return await this._zooService.update(id, updateZooDto);
     }
 
     @Delete(':id')
     @HttpCode(204)
     @ApiOperation({ summary: 'Удалить информацию о зоопарке' })
-    @ApiParam({ name: 'id', description: 'ID зоопарка' })
+    @ApiParam({ name: 'id', description: 'ID зоопарка', type: String })
     @ApiResponse({ status: 204, description: 'Зоопарк удален.' })
     @ApiResponse({ status: 404, description: 'Зоопарк не найден.' })
-    async deleteZoo(@Param('id') id: string) {
+    async deleteZoo(@Param('id') id: Types.ObjectId) {
         await this._zooService.delete(id);
     }
 
@@ -72,8 +73,8 @@ export class ZooController {
     async getPhotos(
         @Query() filterDto: LimitQueryDto = {},
         @Query() userDto: UserQueryDto = {},
-        @Param('id') zooId: string,
-        @Req() req: { user: { id: string } }
+        @Param('id') zooId: Types.ObjectId,
+        @Req() req: { user: { id: Types.ObjectId } }
     ) {
         return (await this._storageService.findAll({
             ...filterDto, zooId, fields: ['_id'],

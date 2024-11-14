@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, NotFoundException, Param, Post, Query, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, Query, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthRoles } from '../auth/guards';
 import { FileStorageService, FileType, LimitQueryDto, UserRole } from '../../shared';
@@ -25,7 +25,7 @@ export class FileController {
     @ApiResponse({ status: 200, description: 'Файлы успешно получены.' })
     public async getFiles(
         @Query() query: LimitQueryDto = {},
-        @Req() req: { user: { id: string } }
+        @Req() req: { user: { id: Types.ObjectId } }
     ) {
         return (await this._fileService.findAll({ ...query, userId: req.user.id, fields: ['_id']}))
             .map(v => v._id);
@@ -64,7 +64,7 @@ export class FileController {
     public async uploadFile(
         @UploadedFile() file: Express.Multer.File,
         @Body('zooId') zooId: Types.ObjectId,
-        @Req() req: { user: { id: string } }
+        @Req() req: { user: { id: Types.ObjectId } }
     ) {
         if (!file) {
             throw new NotFoundException('Файл не найден');
@@ -89,10 +89,11 @@ export class FileController {
      * @returns Найденный файл или исключение, если файл не найден
      */
     @Get(':id')
-    @ApiOperation({ summary: 'Получить файл по ID' })
+    @ApiOperation({ summary: 'Получить файл по ID'})
+    @ApiParam({ name: 'id', description: 'ID файла', type: String })
     @ApiResponse({ status: 200, description: 'Файл успешно получен.' })
     @ApiResponse({ status: 404, description: 'Файл не найден.' })
-    public async getFileById(@Param('id') id: string, @Res() res: Response) {
+    public async getFileById(@Param('id') id: Types.ObjectId, @Res() res: Response) {
         const file = await this._fileService.findById(id);
         const [mimeType] = file.content.split(';');
         res.setHeader('Content-Type', mimeType.replace('data:', ''));
@@ -109,19 +110,21 @@ export class FileController {
      * @returns Найденный файл или исключение, если файл не найден
      */
     @Get(':id/info')
+    @ApiParam({ name: 'id', description: 'ID файла', type: String })
     @ApiOperation({ summary: 'Получить информацию о файле по ID' })
     @ApiResponse({ status: 200, description: 'Файл успешно получен.' })
     @ApiResponse({ status: 404, description: 'Файл не найден.' })
-    public async getFileInfoById(@Param('id') id: string) {
+    public async getFileInfoById(@Param('id') id: Types.ObjectId) {
         return this._fileService.findById(id, ['_id', 'type', 'userId', 'zooId'])
     }
 
     @Delete(':id')
     @HttpCode(204)
+    @ApiParam({ name: 'id', description: 'ID файла', type: String })
     @ApiOperation({ summary: 'Удалить файл' })
     @ApiResponse({ status: 204, description: 'Файл удален.' })
     @ApiResponse({ status: 404, description: 'Файл не найдено.' })
-    async deleteFile(@Param('id') id: string) {
+    async deleteFile(@Param('id') id: Types.ObjectId) {
         await this._fileService.delete(id);
     }
 }
