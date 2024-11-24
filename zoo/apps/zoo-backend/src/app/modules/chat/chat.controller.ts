@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, Param, Post, Req } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FileStorageService, UserRole } from '../../shared';
+import { UserRole } from '../../shared';
 import { AuthRoles } from '../auth/guards';
 import { ChatService } from './services';
 import { Chat } from './entities';
@@ -15,7 +15,6 @@ export class ChatController {
 
     constructor(
         private readonly _chatService: ChatService,
-        private readonly _storage: FileStorageService
     ) {
     }
 
@@ -32,11 +31,13 @@ export class ChatController {
         return 'Используйте эту конечную точку для установления WebSocket-соединения.';
     }
 
-    @Get()
+    @Get('my')
     @ApiOperation({ summary: 'Получить все чаты пользователя' })
     @ApiResponse({ status: 200, description: 'Список всех FAQ.', type: Chat, isArray: true })
-    public async getAllChats() {
-        return [];
+    public async getAllChats(
+        @Req() req: { user: AccessTokenInterface }
+    ) {
+        return await this._chatService.findAll({ userId: req.user._id });
     }
 
     @Post(':zooId')
@@ -48,6 +49,6 @@ export class ChatController {
         @Param('zooId') zooId: Types.ObjectId,
         @Req() req: { user: AccessTokenInterface }
     ) {
-        return await this._chatService.create({ zooId: zooId, userId: req.user.id });
+        return await this._chatService.create({ zooId: zooId, userId: req.user._id });
     }
 }

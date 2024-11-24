@@ -4,15 +4,19 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Chat, ChatBtn, ChatBtnSchema, ChatMessage, ChatMessageSchema, ChatSchema } from './entities';
 import { ChatBtnService, ChatMessageService, ChatService } from './services';
 import { ChatController } from './chat.controller';
-import { ChatManagerService } from './managers';
-import { FileStorageModule } from '../../shared';
+import { ChatManagerFactoryService, ChatManagerService } from './managers';
+import { FileStorageModule, GigaChatModule, SharedAnimalModule, SharedFaqModule, SharedZooModule } from '../../shared';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: Chat.name, schema: ChatSchema }]),
         MongooseModule.forFeature([{ name: ChatMessage.name, schema: ChatMessageSchema }]),
         MongooseModule.forFeature([{ name: ChatBtn.name, schema: ChatBtnSchema }]),
-        FileStorageModule
+        FileStorageModule,
+        SharedZooModule,
+        SharedFaqModule,
+        SharedAnimalModule,
+        GigaChatModule
     ],
     controllers: [
         ChatController
@@ -20,6 +24,7 @@ import { FileStorageModule } from '../../shared';
     providers: [
         ChatGateway,
         ChatService,
+        ChatManagerFactoryService,
         ChatMessageService,
         ChatBtnService,
         ChatManagerService

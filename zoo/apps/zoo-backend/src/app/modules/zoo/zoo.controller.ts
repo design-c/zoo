@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Req } from '@nestjs/common';
-import { ZooService } from './services';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUpdateZooDto } from './dto';
-import { Zoo } from './entities/zoo.entity';
 import { AuthRoles } from '../auth/guards';
-import { FileStorageService, LimitQueryDto, UserQueryDto, UserRole } from '../../shared';
+import { FileStorageService, LimitQueryDto, UserQueryDto, UserRole, Zoo, ZooService } from '../../shared';
 import { Types } from 'mongoose';
 
 @ApiTags('Zoo')

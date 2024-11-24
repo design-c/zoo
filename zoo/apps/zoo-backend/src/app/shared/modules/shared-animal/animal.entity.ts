@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from '../../shared';
+import { BaseEntity } from '../../entities';
+
 
 @Schema()
 export class Animal extends BaseEntity {
@@ -18,7 +19,7 @@ export class Animal extends BaseEntity {
     public readonly description: string;
 
     @ApiProperty({ example: '60d21b4667d0d8992e610c85', description: 'ID зоопарка', type: String })
-    @Prop({ type: Types.ObjectId,  required: false })
+    @Prop({ type: Types.ObjectId, required: false })
     public readonly zooId: Types.ObjectId;
 }
 

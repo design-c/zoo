@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
-import { FAQService } from './faq.service';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUpdateFaqDto } from './dto/create-update-faq.dto';
-import { FAQ } from './faq.entity';
 import { AuthRoles } from '../auth/guards';
-import { UserRole } from '../../shared';
+import { FAQ, FAQService, UserRole } from '../../shared';
 import { Types } from 'mongoose';
 
 

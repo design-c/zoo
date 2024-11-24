@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from '../../shared';
+import { BaseEntity } from '../../entities';
 
 @Schema()
 export class FAQ extends BaseEntity {

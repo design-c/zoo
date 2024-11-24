@@ -1,18 +1,20 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer, } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { GetMessageDto } from './dto';
-import { ChatManagerService } from './managers';
 import { ChatMessage } from './entities';
 import { InitChatDto } from './dto/init-chat.dto';
+import { ChatManagerFactoryService, ChatManagerService } from './managers';
 
 
 @WebSocketGateway({ path: '/api/chat' })
-export class ChatGateway  {
+export class ChatGateway  implements  OnGatewayDisconnect {
     @WebSocketServer()
     private readonly _server: Server;
 
+    private readonly _clients: Map<string, ChatManagerService> = new Map();
+
     constructor(
-//        private readonly _chatService: ChatManagerService
+        private readonly _chatFactory: ChatManagerFactoryService
     ) {
     }
 
@@ -21,9 +23,10 @@ export class ChatGateway  {
         @ConnectedSocket() client: Socket,
         @MessageBody() data: InitChatDto,
     ) {
-//        const message = await this._chatService.init(data.id)
+        this._clients.set(client.id, await this._chatFactory.get(data.id));
+        const answer = await this._clients.get(client.id).getInitMessage();
 
-//        await this._answer(client, message);
+        await this.answer(client, answer);
     }
 
     @SubscribeMessage('message')
@@ -32,12 +35,9 @@ export class ChatGateway  {
         @MessageBody() data: GetMessageDto,
     ) {
         const { text, attachments } = data;
-//        const message = await this._chatService.handleMessage(text, attachments);
+        const message = await this._clients.get(client.id).handleMessage(text);
 
-//        await this._answer(client, message);
-
-        this._server.to(client.id)
-            .emit('message', 'pong')
+        await this.answer(client, message);
     }
 
     @SubscribeMessage('buttonClick')
@@ -45,12 +45,17 @@ export class ChatGateway  {
         @ConnectedSocket() client: Socket,
         @MessageBody() data: { buttonId: string },
     ) {
-//        const button = await this._chatService.handleButton(data.buttonId);
+        const button = await this._clients.get(client.id).handleButton(data.buttonId);
 
-//        await this._answer(client, button);
+        await this.answer(client, button);
     }
 
-    private async _answer(client: Socket, message: ChatMessage): Promise<void> {
+
+    public handleDisconnect(client: Socket) {
+        this._clients.delete(client.id);
+    }
+
+    private async answer(client: Socket, message: ChatMessage): Promise<void> {
         this._server.to(client.id)
             .emit('message', message.toJSON());
     }

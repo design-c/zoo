@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
-import { AnimalService } from './animal.service';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUpdateAnimalDto } from './dto/create-update-animal.dto';
-import { Animal } from './animal.entity';
 import { AuthRoles } from '../auth/guards';
-import { LimitQueryDto, UserRole } from '../../shared';
+import { Animal, AnimalService, LimitQueryDto, UserRole } from '../../shared';
 import { Types } from 'mongoose';
 
 @ApiTags('Animals')

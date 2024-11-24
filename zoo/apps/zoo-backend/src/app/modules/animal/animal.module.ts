@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Animal, AnimalSchema } from './animal.entity';
-import { AnimalService } from './animal.service';
 import { AnimalController } from './animal.controller';
+import { SharedAnimalModule } from '../../shared';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: Animal.name, schema: AnimalSchema }]),
+        SharedAnimalModule
     ],
-    controllers: [AnimalController],
-    providers: [AnimalService],
+    controllers: [
+        AnimalController
+    ],
 })
 export class AnimalModule {
 }
