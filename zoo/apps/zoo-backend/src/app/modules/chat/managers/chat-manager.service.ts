@@ -11,7 +11,7 @@ export class ChatManagerService {
     private _zoo: Zoo;
     private _animals: Animal[] = [];
     private readonly _history: ChatMessage[] = [];
-    private readonly _systemId: Types.ObjectId = new Types.ObjectId('00000000000');
+    private readonly _systemId: Types.ObjectId = new Types.ObjectId('000000000000000000000000');
 
 
     constructor(
