@@ -9,8 +9,10 @@ export class BaseEntity extends Document<Types.ObjectId> {
     public override readonly id: Types.ObjectId;
 
     @ApiProperty({ example: '2021-07-21T17:32:28Z', description: 'Дата создания' })
-    createdAt?: Date;
+    @Prop({ required: false, type: Date })
+    public readonly createdAt?: Date;
 
     @ApiProperty({ example: '2021-07-21T17:32:28Z', description: 'Дата обновления' })
-    updatedAt?: Date;
+    @Prop({ required: false, type: Date })
+    public readonly updatedAt?: Date;
 }

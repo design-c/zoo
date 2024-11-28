@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Chat, ChatBtn, ChatBtnSchema, ChatMessage, ChatMessageSchema, ChatSchema } from './entities';
 import { ChatBtnService, ChatMessageService, ChatService } from './services';
 import { ChatController } from './chat.controller';
-import { ChatManagerFactoryService, ChatManagerService } from './managers';
+import { ChatManagerFactoryService, ChatManagerService, QrCodeDecoderService } from './managers';
 import { FileStorageModule, GigaChatModule, SharedAnimalModule, SharedFaqModule, SharedZooModule } from '../../shared';
 
 @Module({
@@ -24,6 +24,7 @@ import { FileStorageModule, GigaChatModule, SharedAnimalModule, SharedFaqModule,
     providers: [
         ChatGateway,
         ChatService,
+        QrCodeDecoderService,
         ChatManagerFactoryService,
         ChatMessageService,
         ChatBtnService,

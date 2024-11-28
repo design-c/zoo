@@ -1,54 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { OpeningHoursDto } from './opening-hours.dto';
+import { Types } from 'mongoose';
 
 export class CreateUpdateZooDto {
-    @ApiProperty({
-        description: 'Название зоопарка',
-        example: 'Сочинский зоопарк',
-    })
+    @ApiProperty({ example: 'Сочинский зоопарк', description: 'Название зоопарка' })
     public readonly name: string;
 
-    @ApiProperty({
-        description: 'Описание зоопарка',
-        example: 'Зоопарк с редкими видами животных...',
-    })
-    public readonly description: string;
+    @ApiProperty({ example: 'Зоопарк с редкими видами животных...', description: 'Описание зоопарка' })
+    public readonly description?: string;
 
-    @ApiProperty({
-        description: 'Время работы зоопарка по дням недели',
-        example: {
-            monday: '10:00-18:00',
-            tuesday: '10:00-18:00',
-            wednesday: '10:00-18:00',
-            thursday: '10:00-18:00',
-            friday: '10:00-18:00',
-            saturday: '10:00-20:00',
-            sunday: '10:00-20:00',
-        },
-    })
-    public readonly openingHours: OpeningHoursDto;
+    @ApiProperty({ example: '<a></a>', description: 'Контактные данные' })
+    public readonly contactHtml?: string;
 
-    @ApiProperty({
-        description: 'Контактный номер телефона',
-        example: '+7 495 123-45-67',
-    })
-    public readonly contactPhone: string;
-
-    @ApiProperty({
-        description: 'Контактный email',
-        example: 'info@zoo.ru',
-    })
-    public readonly contactEmail: string;
-
-    @ApiProperty({
-        description: 'Правила посещения зоопарка',
-        example: 'Нельзя кормить животных!'
-    })
+    @ApiProperty({ example: 'Нельзя кормить животных!', description: 'Правила посещения зоопарка' })
     public readonly rules: string;
 
-    @ApiProperty({
-        description: 'Id главной фотографии зоопарка',
-        example: '672a6cf8093988b4eef41ba2'
-    })
-    public readonly photoId: string;
+    @ApiProperty({ example: '[000000000000000000000000]', description: 'Фотографии на главной' })
+    public readonly carouselImages: Types.ObjectId[];
+
+    @ApiProperty({ example: '[{000000000000000000000000}]', description: 'Новости зоопарка' })
+    public newsItems: Types.ObjectId[];
 }
