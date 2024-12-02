@@ -6,11 +6,17 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        env_file:
+            -  .env
+            - .env.docker
         environment:
             - DEV_PLATFORM=DOCKER
     nx-angular-base:
         build:
             context: .
             dockerfile: Angular.Dockerfile
+        env_file:
+            - .env
+            - .env.docker
         environment:
             - DEV_PLATFORM=DOCKER
