@@ -57,7 +57,7 @@ export class LoginComponent {
             ).subscribe(
             (response) => {
                 this._authService.setToken(response.token);
-                this._router.navigate(['/']);
+                this._router.navigate(['/cabinet']);
             },
             (error) => {
                 console.error('Ошибка при авторизации:', error);
