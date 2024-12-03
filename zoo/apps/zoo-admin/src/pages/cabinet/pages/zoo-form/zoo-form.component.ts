@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    templateUrl: './cabinet.component.html',
+    templateUrl: './zoo-form.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true
 })
-export class CabinetComponent {
-
-    constructor() {
-    }
+export class ZooFormComponent {
 
 }
