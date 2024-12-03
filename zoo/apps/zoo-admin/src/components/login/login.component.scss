@@ -1,0 +1,70 @@
+/* Стили для контейнера страницы, чтобы центрировать форму */
+.page-container {
+    display: flex;
+    justify-content: center; /* Выравнивание по горизонтали */
+    align-items: center; /* Выравнивание по вертикали */
+    height: 100vh; /* Заполнение всей высоты экрана */
+    margin: 0;
+    background-color: #f4f7fa; /* Опционально, для фонового цвета */
+}
+
+/* Общие стили для всей формы */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px; /* Увеличим максимальную ширину */
+    width: 100%; /* Форма будет растягиваться на всю доступную ширину */
+    padding: 30px; /* Увеличим отступы внутри формы */
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Поля ввода */
+.tui-textfield {
+    margin-bottom: 20px; /* Увеличим отступы между полями */
+
+    & input {
+        padding: 14px; /* Увеличим отступы внутри полей ввода */
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        width: 100%;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: #0077cc;
+            outline: none;
+        }
+    }
+}
+
+/* Ошибки */
+tui-error {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Кнопка отправки */
+button[tuiButton] {
+    padding: 14px 20px;
+    font-size: 16px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #005fa3;
+    }
+
+    &:disabled {
+        background-color: #b0bec5;
+        cursor: not-allowed;
+    }
+}

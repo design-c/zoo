@@ -64,6 +64,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "apps/zoo-admin/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "zoo-admin:build:production"
@@ -82,15 +85,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
-      "options": {
-        "jestConfig": "apps/zoo-admin/jest.config.ts"
-      }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
