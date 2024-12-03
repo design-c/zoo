@@ -1,2 +1,21 @@
-cabinet-layout
+<tui-segmented>
+    <a
+        routerLinkActive
+        [routerLink]="'./zoo'"
+    >
+        Zoo
+    </a>
+    <a
+        routerLinkActive
+        [routerLink]="'./animals'"
+    >
+        Animals
+    </a>
+    <a
+        routerLinkActive
+        [routerLink]="'./faq'"
+    >
+        faq
+    </a>
+</tui-segmented>
 <router-outlet></router-outlet>
