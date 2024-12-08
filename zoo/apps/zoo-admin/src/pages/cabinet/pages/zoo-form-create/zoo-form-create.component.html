@@ -1,56 +1,52 @@
 <div class="page-container">
-    <h3 class="form-title">Добавить животное в зоопарк</h3>
+    <h3 class="form-title">Создание зоопарка</h3>
     <form [formGroup]="createZooForm" (ngSubmit)="onSubmit()" class="create-zoo-form">
         
         <!-- Название зоопарка -->
         <tui-textfield class="tui-space_top-4">
-            <label tuiLabel>Навзвание вида</label>
+            <label tuiLabel>Название зоопарка</label>
             <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
             <input
                 formControlName="zooName"
                 tuiTextfield
-                placeholder="Введите название вида"
+                placeholder="Введите название зоопарка"
             />
         </tui-textfield>
         
         <!-- Местоположение -->
         <tui-textfield class="tui-space_top-4">
-            <label tuiLabel>Имя животного</label>
+            <label tuiLabel>Местоположение</label>
             <tui-error formControlName="zooLocation" [error]="[] | tuiFieldError | async"></tui-error>
             <input
                 formControlName="zooLocation"
                 tuiTextfield
-                placeholder="Введите имя животного"
+                placeholder="Введите местоположение"
             />
         </tui-textfield>
         
         <!-- Описание зоопарка -->
         <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
-            <label tuiLabel>Описание животного</label>
+            <label tuiLabel>Описание зоопарка</label>
             <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
             <textarea
-                placeholder="Введите описания животного"
+                placeholder="Описание зоопарка"
                 tuiTextfieldLegacy
             ></textarea>
         </tui-textarea>
-    
-        <div class="file">
-            <label tuiLabel>Изображение животного</label>
-            <div class="file-custom">
-                <span class="file-custom-label">Нажмите для выбора изображения</span>
-                <input
-                    type="file"
-                    accept="image/*"
-                    formControlName="file"
-                    class="file-input-hidden"
-                />
-            </div>
-            <tui-error formControlName="file" [error]="[] | tuiFieldError | async"></tui-error>
-        </div>
+        
+        <!-- Контактная информация -->
+        <tui-textarea formControlName="zooContact" class="tui-space_top-4">
+            <label tuiLabel>Контактная информация зоопарка</label>
+            <tui-error formControlName="zooContact" [error]="[] | tuiFieldError | async"></tui-error>
+            <textarea
+                placeholder="Контактная информация зоопарка"
+                tuiTextfieldLegacy
+            ></textarea>
+        </tui-textarea>
         
         <!-- Кнопка отправки -->
         <button tuiButton type="submit" [disabled]="createZooForm.invalid" class="tui-space_top-4">
-            Добавить животное
+            Создать зоопарк
         </button>
     </form>
 </div>

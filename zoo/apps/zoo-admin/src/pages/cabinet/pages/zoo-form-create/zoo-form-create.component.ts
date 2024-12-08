@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
+import { TuiButton, TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
 import { TuiFieldErrorPipe, TuiFile, TuiFilesComponent, TuiInputFiles, TuiInputFilesDirective, tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { TuiNativeValidator } from '@taiga-ui/cdk';
 import { TuiTextareaModule } from '@taiga-ui/legacy';
 
 @Component({
-    templateUrl: './animals-form.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrl: './animals-form.component.scss',
+    selector: 'app-zoo-form-create',
     standalone: true,
+    styleUrl: './zoo-form-create.component.scss',
+    templateUrl: './zoo-form-create.component.html',
     imports: [
         ReactiveFormsModule,
         TuiTextfieldComponent,
@@ -26,7 +26,6 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         TuiInputFilesDirective,
         TuiFile,
         TuiFilesComponent,
-        TuiTextfieldOptionsDirective,
     ],
     providers: [
         tuiValidationErrorsProvider({
@@ -34,27 +33,26 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         })
     ],
 })
-export class AnimalsFormComponent {
+export class ZooFormCreateComponent {
 
     protected readonly createZooForm: FormGroup<{
         zooName: FormControl<string | null>,
         zooLocation: FormControl<string | null>,
         zooDescription: FormControl<string | null>,
-        file: FormControl<any | null>,
+        zooContact: FormControl<string | null>,
     }> = new FormGroup({
         zooName: new FormControl('', [Validators.required]),
         zooLocation: new FormControl('', [Validators.required]),
         zooDescription: new FormControl('', [Validators.required]),
-        file: new FormControl<any | null>(null, [Validators.required]),
+        zooContact: new FormControl('', [Validators.required]),
     });
 
     protected onSubmit() {
-        const { zooName, zooLocation, zooDescription } = this.createZooForm.value;
+        const { zooName, zooLocation, zooDescription, zooContact } = this.createZooForm.value;
 
-        if (!zooName || !zooLocation || !zooDescription) {
+        if (!zooName || !zooLocation || !zooDescription || !zooContact) {
             return;
         }
 
     }
-
 }

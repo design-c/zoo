@@ -1,0 +1,62 @@
+<div class="page-container">
+    <h3 class="form-title">Редактирование зоопарка</h3>
+    <form [formGroup]="editZooForm" (ngSubmit)="onSubmit()" class="edit-zoo-form">
+        
+        <!-- Тип зоопарка (Селект) -->
+        <tui-select class="tui-space_top-4" formControlName="zooType">
+            <label tuiLabel>Выбранный зоопарк</label>
+            <tui-data-list-wrapper
+                *tuiDataList
+                size="l"
+                [items]="zooTypes"
+            />
+        </tui-select>
+        
+        <!-- Название зоопарка -->
+        <tui-textfield class="tui-space_top-4">
+            <label tuiLabel>Название зоопарка</label>
+            <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+            <input
+                formControlName="zooName"
+                tuiTextfield
+                placeholder="Введите новое название зоопарка"
+            />
+        </tui-textfield>
+        
+        <!-- Местоположение -->
+        <tui-textfield class="tui-space_top-4">
+            <label tuiLabel>Местоположение</label>
+            <tui-error formControlName="zooLocation" [error]="[] | tuiFieldError | async"></tui-error>
+            <input
+                formControlName="zooLocation"
+                tuiTextfield
+                placeholder="Введите новое местоположение"
+            />
+        </tui-textfield>
+        
+        <!-- Описание зоопарка -->
+        <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+            <label tuiLabel class="zoo-form-label">Описание зоопарка</label>
+            <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+            <textarea
+                placeholder="Обновите описание зоопарка"
+                tuiTextfieldLegacy
+            ></textarea>
+        </tui-textarea>
+        
+        <!-- Контактная информация -->
+        <tui-textarea formControlName="zooContact" class="tui-space_top-4">
+            <label tuiLabel class="zoo-form-label">Контактная информация зоопарка</label>
+            <tui-error formControlName="zooContact" [error]="[] | tuiFieldError | async"></tui-error>
+            <textarea
+                placeholder="Обновите контактную информацию"
+                tuiTextfieldLegacy
+            ></textarea>
+        </tui-textarea>
+        
+        <!-- Кнопка отправки -->
+        <button tuiButton type="submit" [disabled]="editZooForm.invalid" class="tui-space_top-4">
+            Сохранить изменения
+        </button>
+    </form>
+</div>

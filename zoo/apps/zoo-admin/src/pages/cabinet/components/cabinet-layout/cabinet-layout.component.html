@@ -1,21 +1,29 @@
-<tui-segmented>
-    <a
-        routerLinkActive
-        [routerLink]="'./zoo'"
-    >
-        Zoo
-    </a>
-    <a
-        routerLinkActive
-        [routerLink]="'./animals'"
-    >
-        Animals
-    </a>
-    <a
-        routerLinkActive
-        [routerLink]="'./faq'"
-    >
-        faq
-    </a>
-</tui-segmented>
-<router-outlet></router-outlet>
+<div class="header">
+    <div class="logo">
+        Панель администратора зоопарка
+    </div>
+    <tui-segmented class="header-segmented">
+        <a routerLinkActive [routerLink]="'./zoo'">Управление зоопарком</a>
+        <a routerLinkActive [routerLink]="'./animals'">Управление животными</a>
+        <a routerLinkActive [routerLink]="'./faq'">Настройка FAQ</a>
+    </tui-segmented>
+</div>
+
+<div class="container">
+    <tui-accordion>
+        <tui-accordion-item [open]="true" [showArrow]="false">
+            <div class="accordion-header">Создать</div>
+            <ng-template tuiAccordionItemContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </tui-accordion-item>
+    </tui-accordion>
+    <tui-accordion>
+        <tui-accordion-item [open]="false" [showArrow]="false">
+            <div class="accordion-header">Редактировать</div>
+            <ng-template tuiAccordionItemContent>
+                <app-zoo-form-edit></app-zoo-form-edit>
+            </ng-template>
+        </tui-accordion-item>
+    </tui-accordion>
+</div>

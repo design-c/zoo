@@ -12,7 +12,7 @@ export const CABINET_ROUTES: Routes = [{
         },
         {
             path: 'zoo',
-            loadComponent: () => import('./pages/zoo-form/zoo-form.component').then(m => m.ZooFormComponent)
+            loadComponent: () => import('./pages/zoo-form-create/zoo-form-create.component').then(m => m.ZooFormCreateComponent)
         },
         {
             path: 'faq',
