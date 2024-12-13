@@ -1,0 +1,14 @@
+<div class="upload-buttons">
+    <input
+        type="file"
+        accept="image/*"
+        multiple
+        (change)="attachImage($event)"
+        style="display: none;"
+        #galleryInput
+    />
+    <tui-icon
+        icon="assets/camera.svg"
+        (click)="galleryInput.click()"
+    />
+</div>

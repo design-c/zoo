@@ -1,6 +1,24 @@
 version: '3.7'
 
 services:
+    mobile:
+        container_name: 'mobile-app'
+        extends:
+            file: docker-compose.base.yml
+            service: nx-angular-base
+        environment:
+            - PROJECT=zoo-mobile
+        ports:
+            - "1458:80"
+    zoo-admin:
+        container_name: 'zoo-admin-app'
+        extends:
+            file: docker-compose.base.yml
+            service: nx-angular-base
+        environment:
+            - PROJECT=zoo-backend
+        ports:
+            - "1128:80"
     backend:
         container_name: 'backend'
         extends:

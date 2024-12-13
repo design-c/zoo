@@ -5,7 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ChatPage } from './pages/chat/chat-page.component';
 import { ChatInputComponent } from './components/chat-input/chat-input.component';
-import { TuiIcon } from '@taiga-ui/core';
+import { TuiIcon, TuiScrollbar } from '@taiga-ui/core';
+import { ImageListComponent } from './components/image-list/image-list.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { FileStorageService } from './services/file-storage.service';
+import { ChatService } from './services/chat.service';
+import { ChatComponent } from './components/chat/chat.component';
+import PreviewImageComponent from '../../../../standalone/preview-image/preview-image.component';
 
 const routes: Routes = [
     {
@@ -21,9 +27,21 @@ const routes: Routes = [
         FormsModule,
         RouterModule.forChild(routes),
         ReactiveFormsModule,
-        TuiIcon
+        TuiIcon,
+        TuiScrollbar,
+        PreviewImageComponent
     ],
-    declarations: [ChatPage, ChatInputComponent],
+    declarations: [
+        ChatPage,
+        ChatInputComponent,
+        ImageListComponent,
+        ImageUploadComponent,
+        ChatComponent
+    ],
+    providers: [
+        FileStorageService,
+        ChatService
+    ]
 })
 export class ChatModule {
 }

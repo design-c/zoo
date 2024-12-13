@@ -1,22 +1,8 @@
 .chat {
-    display: flex;
-    flex-direction: column;
     height: 100%;
+    display: grid;
 }
 
 .chat-messages {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.chat-input-wrapper {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 10; /* Если нужно поднять над другими элементами */
-    background: #ffffff; /* Если нужен фон */
-}
-
-ion-content {
-    --padding-bottom: 56px;
+    overflow: hidden;
 }

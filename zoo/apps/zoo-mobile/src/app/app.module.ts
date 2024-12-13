@@ -6,12 +6,24 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { TuiRoot } from '@taiga-ui/core';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     declarations: [AppComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        TuiRoot,
+        AppRoutingModule
+    ],
+    providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideAnimations(),
+        NG_EVENT_PLUGINS,
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {

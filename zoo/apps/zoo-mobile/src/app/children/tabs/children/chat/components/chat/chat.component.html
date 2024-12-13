@@ -1,0 +1,12 @@
+<div class="chat">
+    <tui-scrollbar class="chat-scroll">
+        <div class="chat-container">
+            <div class="chat-messages">
+                <div class="message" *ngFor="let message of messages()">
+                    <div class="message-text">{{ message.text }}</div>
+                    <div class="message-timestamp">{{ message.timestamp | date: 'short' }}</div>
+                </div>
+            </div>
+        </div>
+    </tui-scrollbar>
+</div>
