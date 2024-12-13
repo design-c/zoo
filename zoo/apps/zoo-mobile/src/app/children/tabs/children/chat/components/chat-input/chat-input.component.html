@@ -1,25 +1,46 @@
-<form class="input-container">
-    <div #left class="icon-left">
-        <tui-icon
-            icon="assets/pin.svg"
-        />
+<div>
+    <div class="attached-images">
+        <div class="image-preview" *ngFor="let image of attachedImages(); let i = index">
+            <div class="loader" *ngIf="image.loading"></div>
+            <img [src]="image.preview" alt="Preview" *ngIf="!image.loading" />
+            <button class="remove-button" (click)="removeImage(i)">✕</button>
+        </div>
     </div>
-    <textarea
-        placeholder="Задай вопрос"
-        [(ngModel)]="questionText"
-        name="questionText"
-        #input
-        (input)="adjustElementHeight()"
-        rows="1">
+
+    <form class="input-container">
+        <div #left class="icon-left">
+            <input
+                type="file"
+                accept="image/*"
+                (change)="attachImage($event)"
+                style="display: none;"
+                multiple
+                #imageInput
+            />
+            <tui-icon
+                icon="assets/pin.svg"
+                (click)="imageInput.click()"
+            />
+        </div>
+        <textarea
+            placeholder="Задай вопрос"
+            [(ngModel)]="questionText"
+            name="questionText"
+            #input
+            (input)="adjustElementHeight()"
+            rows="1">
     </textarea>
-    <div #right class="icon-right">
-        <tui-icon
-            icon="assets/camera.svg"
-        />
-        <tui-icon
-            [class.disable]="!questionText"
-            class="send-icon"
-            icon="assets/taiga-ui/icons/send-horizontal.svg"
-        />
-    </div>
-</form>
+        <div #right class="icon-right">
+            <tui-icon
+                icon="assets/camera.svg"
+            />
+            <tui-icon
+                [class.disable]="!questionText"
+                class="send-icon"
+                icon="assets/taiga-ui/icons/send-horizontal.svg"
+                (click)="send()"
+            />
+        </div>
+    </form>
+
+</div>
