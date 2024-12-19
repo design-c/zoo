@@ -1,133 +1,14 @@
-:root {
-    --tui-radius-l: 0;
-}
+@import 'common';
 
-/* Общие стили для шапки */
-.header {
+.cabinet {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: #5a5a5a; /* Цвет фона шапки */
-    padding: 1rem 0;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-bottom: 2px solid #444444;
-    margin-bottom: 1rem;
-}
-
-/* Логотип */
-.logo {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-/* Стили для сегментов */
-tui-segmented {
-    display: flex;
     justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    max-width: 1000px;
-    background-color: #e0e0e0; /* Фон для сегментов */
-    border-radius: 8px;
-    padding: 0.5rem 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень */
-}
+    gap: var(--spacing-l);
 
-/* Сегменты (ссылки) */
-tui-segmented > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    color: #5a5a5a; /* Цвет текста по умолчанию */
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 8px;
-    background-color: transparent;
-    border: 2px solid transparent; /* Начальная прозрачная граница */
-    cursor: pointer;
-    transition: all 0.3s ease; /* Плавный переход */
-}
-
-/* Активная вкладка */
-tui-segmented > a.router-link-active {
-    background-color: #444444; /* Темный фон для активной вкладки */
-    color: white; /* Белый текст для активной вкладки */
-    font-weight: 600;
-    border: 2px solid #333333; /* Темная граница для активной вкладки */
-}
-
-/* Наведение на сегменты */
-tui-segmented > a:hover {
-    background-color: #f7f7f7; /* Легкий фон при наведении */
-    color: #444444; /* Цвет текста при наведении */
-    border: 2px solid #444444; /* Граница при наведении */
-}
-
-/* Контейнер для контента */
-.content {
-    padding: 2rem;
-    background-color: #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Стили для подложки и прокрутки */
-body {
-    font-family: 'Roboto', sans-serif;
-    color: #333; /* Тёмный текст для лучшего контраста */
-    background-color: #f7f7f7; /* Легкий фон для улучшения восприятия */
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-
-/* Добавляем немного отступов для лучшей видимости */
-.container {
-    margin-top: 1rem;
-}
-
-/* Стили для аккордеона */
-tui-accordion {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Стили для заголовков аккордеона */
-.accordion-header {
-    font-size: 1.25rem;
-    font-weight: bold;
-    padding: 1rem;
-    background-color: #5a5a5a;
-    color: white;
-    cursor: pointer;
-}
-
-/* Плавные переходы для аккордеона */
-tui-accordion-item {
-    border-radius: 0 !important;
-    transition: all 0.3s ease;
-}
-
-::ng-deep .t-header {
-    padding: 0 !important;
-}
-
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    &__accordion-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-m);
+    }
 }

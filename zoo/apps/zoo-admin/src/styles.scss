@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --color-primary: #5a5a5a;
+    --color-active: #444444;
+    --color-hover: #f7f7f7;
+    --color-error: #d32f2f;
+    --color-border: #e0e0e0;
+    --color-text-secondary: rgba(0, 0, 0, 0.1);
+    --color-text-primary: #343a40;
+    --color-bg-page: #f4f7fa;
+    --color-bg-primary: #ffffff;
+    --spacing-s: 10px;
+    --spacing-m: 20px;
+    --spacing-l: 30px;
+    --text-size-xl: 1.75rem;
+    --text-size-l: 1.5rem;
+    --text-size-m: 1.25rem;
+    --text-size-s: 1rem;
+}

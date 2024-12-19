@@ -1,29 +1,34 @@
-<div class="header">
-    <div class="logo">
-        Панель администратора зоопарка
+<div class="cabinet">
+    <app-cabinet-header class="cabinet__header">
+        <span header>Панель администратора зоопарка</span>
+        <ng-container *ngFor="let route of routes">
+            <a routerLinkActive
+               *tuiLet="formState.getState(route) as state"
+               [routerLink]="'./' + route"
+               [state]="state"
+            >
+                {{state.title}}
+            </a>
+        </ng-container>
+    </app-cabinet-header>
+    <div class="cabinet__accordion-container" *tuiLet="formState | async as activeState">
+        <ng-container *ngIf="activeState !== null">
+            <app-accordion [open]="true">
+                <span header>{{ activeState!.create.header }}</span>
+                <app-form-layout>
+                    <span formTitle>{{ activeState!.create.formTitle }}</span>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, tempora!
+                    <span buttonText>{{ activeState!.create.buttonTitle }}</span>
+                </app-form-layout>
+            </app-accordion>
+            <app-accordion [open]="false">
+                <span header>{{ activeState!.update.header }}</span>
+                <app-form-layout>
+                    <span formTitle>{{ activeState!.update.formTitle }}</span>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, tempora!
+                    <span buttonText>{{ activeState!.update.buttonTitle }}</span>
+                </app-form-layout>
+            </app-accordion>
+        </ng-container>
     </div>
-    <tui-segmented class="header-segmented">
-        <a routerLinkActive [routerLink]="'./zoo'">Управление зоопарком</a>
-        <a routerLinkActive [routerLink]="'./animals'">Управление животными</a>
-        <a routerLinkActive [routerLink]="'./faq'">Настройка FAQ</a>
-    </tui-segmented>
-</div>
-
-<div class="container">
-    <tui-accordion>
-        <tui-accordion-item [open]="true" [showArrow]="false">
-            <div class="accordion-header">Создать</div>
-            <ng-template tuiAccordionItemContent>
-                <router-outlet></router-outlet>
-            </ng-template>
-        </tui-accordion-item>
-    </tui-accordion>
-    <tui-accordion>
-        <tui-accordion-item [open]="false" [showArrow]="false">
-            <div class="accordion-header">Редактировать</div>
-            <ng-template tuiAccordionItemContent>
-                <app-zoo-form-edit></app-zoo-form-edit>
-            </ng-template>
-        </tui-accordion-item>
-    </tui-accordion>
 </div>

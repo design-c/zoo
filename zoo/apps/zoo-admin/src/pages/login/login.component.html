@@ -1,10 +1,8 @@
-<div class="page-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+<div class="page">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="page__form">
         
-        <!-- Логин (Email) -->
         <tui-textfield class="tui-space_top-4">
             <label tuiLabel>Логин</label>
-            <!-- Ошибка для логина будет отображена над полем -->
             <tui-error formControlName="login" [error]="[] | tuiFieldError | async">
             </tui-error>
             <input
@@ -14,10 +12,8 @@
             />
         </tui-textfield>
         
-        <!-- Пароль -->
         <tui-textfield class="tui-space_top-4">
             <label tuiLabel>Пароль</label>
-            <!-- Ошибка для пароля будет отображена над полем -->
             <tui-error formControlName="password" [error]="[] | tuiFieldError | async">
             </tui-error>
             <input
@@ -28,7 +24,6 @@
             />
         </tui-textfield>
         
-        <!-- Кнопка отправки -->
         <button tuiButton type="submit" [disabled]="loginForm.invalid">Войти</button>
     
     </form>
