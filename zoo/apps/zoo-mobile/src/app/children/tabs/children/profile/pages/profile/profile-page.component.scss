@@ -21,6 +21,28 @@ section {
     }
 }
 
+.loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    text-align: center;
+
+    &__spinner {
+        --size: 48px;
+    }
+
+    &__text {
+        color: var(--text-secondary);
+        font-size: 16px;
+    }
+}
+
 .gallery {
     display: flex;
     flex-direction: column;

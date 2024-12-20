@@ -1,8 +1,12 @@
 <div class="gallery">
     <div
         class="gallery-item"
-        *ngFor="let image of images"
+        *ngFor="let image of images; let i = index"
+        (click)="openImg(image.image, i)"
     >
-        <img [src]="image" alt="Animal Image" />
+        <img [src]="image.image" alt="Animal Image" />
+        <ng-container *ngIf="status() as stat">
+            <zoo-preview-image [images]="imagesSignal()" [index]="stat.index" [(open)]="open"/>
+        </ng-container>
     </div>
 </div>

@@ -9,6 +9,7 @@ import { AppComponent } from './components/app/app.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TuiRoot } from '@taiga-ui/core';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -23,6 +24,7 @@ import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideAnimations(),
         NG_EVENT_PLUGINS,
+        provideHttpClient(),
     ],
     bootstrap: [AppComponent],
 })

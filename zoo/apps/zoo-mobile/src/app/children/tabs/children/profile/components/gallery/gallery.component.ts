@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Input, signal, WritableSignal } from '@angular/core';
+import { GalleryImageModel } from '../../models/gallery-image.model';
 
 @Component({
     selector: 'app-gallery-component',
@@ -7,7 +8,24 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
     styleUrls: ['gallery.component.scss']
 })
 export class GalleryComponent {
+    @Input()
+    public images: GalleryImageModel[] = [];
 
-    @Input() images: string[] = [];
+    protected get open(): boolean {
+        return this.status() !== null;
+    }
 
+    protected set open(value: boolean) {
+        if (!value) {
+            this.status.set(null)
+        }
+    }
+
+    protected imagesSignal = computed(() => this.images.map(i => ( { src: i.image, title: i.name })))
+
+    protected status: WritableSignal<{ index: number, image: string } | null> = signal(null);
+
+    protected openImg(image: string, index: number): void {
+        this.status.set({ index, image: image });
+    }
 }

@@ -7,6 +7,9 @@ import { ProfilePage } from './pages/profile/profile-page.component';
 import { CheckboxItemComponent } from './components/checkbox-item/checkbox-item.component';
 import { TuiCheckbox } from '@taiga-ui/kit';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { ProfileManagerService } from './services/profile-manager.service';
+import PreviewImageComponent from '../../../../standalone/preview-image/preview-image.component';
+import { TuiIcon } from '@taiga-ui/core';
 
 const routes: Routes = [
     {
@@ -22,8 +25,17 @@ const routes: Routes = [
         FormsModule,
         RouterModule.forChild(routes),
         TuiCheckbox,
+        PreviewImageComponent,
+        TuiIcon,
     ],
-    declarations: [ProfilePage, CheckboxItemComponent, GalleryComponent],
+    declarations: [
+        ProfilePage,
+        CheckboxItemComponent,
+        GalleryComponent
+    ],
+    providers: [
+        ProfileManagerService,
+    ]
 })
 export class ProfileModule {
 }

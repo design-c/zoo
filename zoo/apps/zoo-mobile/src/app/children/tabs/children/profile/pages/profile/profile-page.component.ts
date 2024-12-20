@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IUserSettings } from '../../interfaces/user-settings.interface';
+import { ProfileManagerService } from '../../services/profile-manager.service';
+import { Observable } from 'rxjs';
+import { GalleryImageModel } from '../../models/gallery-image.model';
 
 @Component({
     selector: 'app-profile-page',
@@ -7,6 +10,9 @@ import { IUserSettings } from '../../interfaces/user-settings.interface';
     styleUrls: ['profile-page.component.scss'],
 })
 export class ProfilePage {
+
+    protected readonly profileManager: ProfileManagerService = inject(ProfileManagerService);
+
     protected readonly settings: IUserSettings[] = [
         { name: 'Афиша', isSelected: false },
         { name: 'Новости', isSelected: false },
@@ -14,11 +20,5 @@ export class ProfilePage {
         { name: 'Скидки', isSelected: false }
     ];
 
-    protected readonly galleryImages: string[] = [
-        'assets/jaguar.jpg',
-        'assets/puma.jpg',
-        'assets/tiger.jpg',
-        'assets/vodonos.jfif',
-        'assets/lions.jpg',
-    ]
+    protected readonly galleryImages$: Observable<GalleryImageModel[]> = this.profileManager.getAnimals();
 }

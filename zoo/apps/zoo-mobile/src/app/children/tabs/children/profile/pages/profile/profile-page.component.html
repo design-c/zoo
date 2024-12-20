@@ -16,6 +16,13 @@
     </section>
     <section class="gallery">
         <h3>Галерея</h3>
-        <app-gallery-component [images]="galleryImages"></app-gallery-component>
+        <app-gallery-component *ngIf="galleryImages$ | async as images; else loading"
+                               [images]="images"></app-gallery-component>
+        <ng-template #loading>
+            <div class="loader">
+                <ion-spinner name="crescent"></ion-spinner>
+                <p>Загрузка изображений...</p>
+            </div>
+        </ng-template>
     </section>
 </ion-content>
