@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ISentMessage } from '../../components/chat-input/chat-input.component';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
     selector: 'zoo-chat-page',
@@ -9,7 +10,12 @@ import { ISentMessage } from '../../components/chat-input/chat-input.component';
 })
 export class ChatPage {
 
+    constructor(
+        private readonly _chatService: ChatService
+    ) {
+    }
+
     public sent(message: ISentMessage): void {
-        console.log(message);
+        this._chatService.sendMessage(message.text, message.images);
     }
 }

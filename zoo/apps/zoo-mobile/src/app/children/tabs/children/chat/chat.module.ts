@@ -16,6 +16,7 @@ import { TextMessageComponent } from './components/text-message/text-message.com
 import { ImageGroupMessageComponent } from './components/image-group-message/image-group-message.component';
 import { AudioMessageComponent } from './components/audio-message/audio-message.component';
 import { ButtonsMessageComponent } from './components/buttons-message/buttons-message.component';
+import { WritingMessageComponent } from './components/writing-message/writing-message.component';
 
 const routes: Routes = [
     {
@@ -44,7 +45,8 @@ const routes: Routes = [
         TextMessageComponent,
         ImageGroupMessageComponent,
         AudioMessageComponent,
-        ButtonsMessageComponent
+        ButtonsMessageComponent,
+        WritingMessageComponent
     ],
     providers: [
         FileStorageService,

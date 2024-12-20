@@ -1,6 +1,6 @@
-<div class="chat">
-    <tui-scrollbar class="chat-scroll">
-        <div class="chat-container">
+<div class="chat" (resize)="scroll()">
+    <tui-scrollbar class="chat-scroll" >
+        <div class="chat-container" (resize)="scroll()">
             <div class="chat-messages">
                 @for (message of messages(); track message.id) {
                     <div

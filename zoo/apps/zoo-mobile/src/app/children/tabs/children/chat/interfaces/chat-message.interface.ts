@@ -1,4 +1,4 @@
-export type MessageType = 'text' | 'imageGroup' | 'audio' | 'buttons';
+export type MessageType = 'text' | 'imageGroup' | 'audio' | 'buttons' | 'writing';
 
 export interface BaseMessage {
     id: string; // Уникальный идентификатор сообщения
@@ -15,6 +15,7 @@ export interface TextMessage extends BaseMessage {
 export interface ImageGroupMessage extends BaseMessage {
     type: 'imageGroup';
     imageUrls: string[]; // Массив URL изображений
+    text?: string;
 }
 
 export interface AudioMessage extends BaseMessage {
@@ -32,8 +33,13 @@ export interface ButtonsMessage extends BaseMessage {
     buttons: IButton[]; // Массив кнопок
 }
 
+export interface WritingMessage extends BaseMessage {
+    type: 'writing';
+}
+
 export type Message =
     | TextMessage
     | ImageGroupMessage
     | AudioMessage
-    | ButtonsMessage;
+    | ButtonsMessage
+    | WritingMessage;

@@ -1,5 +1,6 @@
 import { Injectable, signal, Signal } from '@angular/core';
 import { Message, MessageType } from '../interfaces/chat-message.interface';
+import { IImage } from './file-storage.service';
 
 @Injectable()
 export class ChatService {
@@ -26,6 +27,18 @@ export class ChatService {
         this._currentPage++;
         const newMessages = this._generateMockMessages(this._currentPage);
         this._messages.update((currentMessages) => [...newMessages, ...currentMessages]);
+    }
+
+    public sendMessage(text: string, images: IImage[]): void {
+        this._messages.update(v => [...v, {
+            text: text,
+            imageUrls: images.map(i => i.preview),
+            timestamp: new Date(),
+            buttons: [],
+            type: images.length === 0 ? 'text' : 'imageGroup',
+            sender: 'user',
+            id: new Date().getMilliseconds().toString()
+        }]);
     }
 
     /**
@@ -80,6 +93,13 @@ export class ChatService {
                             { label: 'Кнопка 2', action: () => alert(`Нажата кнопка 2 для сообщения ${id}`) },
                         ],
                     };
+                case 'writing': return {
+                    id,
+                    type: 'writing',
+                    sender: 'bot',
+                    timestamp: new Date(),
+                    buttons: []
+                }
             }
         });
     }
