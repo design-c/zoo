@@ -9,11 +9,6 @@ import { ButtonsMessage } from '../../interfaces/chat-message.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonsMessageComponent {
-    public get formattedButtons(): [] {
-        return [];
-    }
-
     @Input()
     public message!: ButtonsMessage;
-
 }

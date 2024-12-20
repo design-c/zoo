@@ -31,6 +31,7 @@ export interface IButton {
 export interface ButtonsMessage extends BaseMessage {
     type: 'buttons';
     buttons: IButton[]; // Массив кнопок
+    text?: string;
 }
 
 export interface WritingMessage extends BaseMessage {

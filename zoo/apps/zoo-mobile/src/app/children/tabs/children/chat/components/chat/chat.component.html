@@ -21,6 +21,9 @@
                         @if (message.type === 'buttons') {
                             <zoo-buttons-message [message]="message"></zoo-buttons-message>
                         }
+                        @if (message.type === 'writing') {
+                            <zoo-writing-message [message]="message" ></zoo-writing-message>
+                        }
                         <div class="message-timestamp">
                             {{ message.timestamp | date: 'HH:mm' }}
                         </div>

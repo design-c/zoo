@@ -31,7 +31,7 @@ export class FileStorageService {
         // Добавляем новые изображения в сигнал
         this._images.update((currentImages) => [...currentImages, ...newImages]);
 
-        // Генерация превью для каждого нового изображения
+        // Устанавливаем превью для изображений
         newImages.forEach((image, index) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -42,13 +42,27 @@ export class FileStorageService {
                         updatedImages[targetIndex] = {
                             ...updatedImages[targetIndex],
                             preview: reader.result as string,
-                            loading: false,
                         };
                     }
                     return updatedImages;
                 });
             };
             reader.readAsDataURL(files[index]);
+
+            // Устанавливаем задержку для изменения loading
+            setTimeout(() => {
+                this._images.update((currentImages) => {
+                    const updatedImages = [...currentImages];
+                    const targetIndex = updatedImages.length - newImages.length + index;
+                    if (updatedImages[targetIndex]) {
+                        updatedImages[targetIndex] = {
+                            ...updatedImages[targetIndex],
+                            loading: false,
+                        };
+                    }
+                    return updatedImages;
+                });
+            }, 2000); // Задержка в миллисекундах
         });
     }
 

@@ -1,7 +1,11 @@
+<div *ngIf="message.text" class="message-text">
+    {{ message.text }}
+</div>
+
 <div class="message-buttons">
-    <div class="button-row" *ngFor="let row of formattedButtons">
-        <button *ngFor="let button of row" (click)="button.action()">
-            {{ button.label }}
+    <div class="button-row" *ngFor="let btn of message.buttons">
+        <button (click)="btn.action()">
+            {{ btn.label }}
         </button>
     </div>
 </div>

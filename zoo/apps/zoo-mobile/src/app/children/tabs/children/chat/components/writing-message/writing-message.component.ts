@@ -13,7 +13,7 @@ export class WritingMessageComponent {
     @Input()
     public message!: WritingMessage;
 
-    public readonly dots$ = interval(100)
+    public readonly dots$ = interval(300)
         .pipe(
             map((count) => '.'.repeat((count % 3) + 1)) // Формируем строку из 1–3 точек
         )

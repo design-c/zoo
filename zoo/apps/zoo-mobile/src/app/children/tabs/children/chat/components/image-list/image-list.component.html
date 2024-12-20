@@ -3,7 +3,7 @@
         <div class="attached-images">
             <div class="image-preview" *ngFor="let image of fileStorageService.images(); let i = index">
                 <div class="loader" *ngIf="image.loading"></div>
-                <img [src]="image.preview" alt="Preview" *ngIf="!image.loading" (click)="openImg(image, i)" />
+                <img [src]="image.preview" alt="Preview" (click)="openImg(image, i)" />
                 <button class="remove-button" (click)="onRemove(i)">✕</button>
             </div>
         </div>
