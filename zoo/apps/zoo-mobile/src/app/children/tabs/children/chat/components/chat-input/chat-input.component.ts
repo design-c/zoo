@@ -1,9 +1,10 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { FileStorageService, IImage } from '../../services/file-storage.service';
 
-export interface IImage {
-    file: File;
-    preview: string;
-    loading: boolean
+
+export interface ISentMessage {
+    text: string;
+    images: IImage[];
 }
 
 @Component({
@@ -17,11 +18,16 @@ export class ChatInputComponent implements AfterViewInit {
     private readonly _textarea!: ElementRef;
 
     @Output()
-    public readonly sent: EventEmitter<any> = new EventEmitter();
+    public readonly sent: EventEmitter<ISentMessage> = new EventEmitter();
 
     protected questionText = '';
     private readonly _minHeight = 24;
     private readonly _linesCount  = 5;
+
+    constructor(
+        protected readonly fileStorageService: FileStorageService
+    ) {
+    }
 
 
     public ngAfterViewInit(): void {
@@ -29,7 +35,16 @@ export class ChatInputComponent implements AfterViewInit {
     }
 
     protected send(): void {
-        this.sent.emit();
+        const images = this.fileStorageService.images()
+        const text = this._textarea.nativeElement.value;
+
+        this._textarea.nativeElement.value = '';
+        this.fileStorageService.clearFiles();
+
+        this.sent.emit({
+            text,
+            images
+        });
     }
 
     protected adjustElementHeight(): void {

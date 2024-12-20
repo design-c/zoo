@@ -1,0 +1,27 @@
+.message-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Расстояние между строками */
+
+    .button-row {
+        display: flex;
+        gap: 10px; /* Расстояние между кнопками */
+        flex-wrap: wrap; /* Автоматический перенос кнопок на новую строку */
+    }
+
+    button {
+        flex: 1 1 auto; /* Кнопки будут одинакового размера */
+        padding: 10px 15px;
+        font-size: 14px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}

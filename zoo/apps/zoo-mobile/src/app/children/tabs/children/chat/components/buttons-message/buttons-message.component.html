@@ -1,0 +1,7 @@
+<div class="message-buttons">
+    <div class="button-row" *ngFor="let row of formattedButtons">
+        <button *ngFor="let button of row" (click)="button.action()">
+            {{ button.label }}
+        </button>
+    </div>
+</div>

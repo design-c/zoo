@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ISentMessage } from '../../components/chat-input/chat-input.component';
 
 @Component({
     selector: 'zoo-chat-page',
@@ -7,4 +8,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatPage {
+
+    public sent(message: ISentMessage): void {
+        console.log(message);
+    }
 }

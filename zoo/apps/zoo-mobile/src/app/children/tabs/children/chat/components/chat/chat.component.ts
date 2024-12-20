@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -12,13 +12,4 @@ export class ChatComponent {
 
     constructor(private readonly chatService: ChatService) {}
 
-    /**
-     * Обработчик скролла вверх для загрузки новых сообщений.
-     */
-    @HostListener('scroll', ['$event.target'])
-    public onScroll(event: HTMLElement): void {
-        if (event.scrollTop === 0) {
-            this.chatService.loadMoreMessages();
-        }
-    }
 }

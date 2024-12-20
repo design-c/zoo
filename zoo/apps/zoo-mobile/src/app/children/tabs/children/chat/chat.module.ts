@@ -12,6 +12,10 @@ import { FileStorageService } from './services/file-storage.service';
 import { ChatService } from './services/chat.service';
 import { ChatComponent } from './components/chat/chat.component';
 import PreviewImageComponent from '../../../../standalone/preview-image/preview-image.component';
+import { TextMessageComponent } from './components/text-message/text-message.component';
+import { ImageGroupMessageComponent } from './components/image-group-message/image-group-message.component';
+import { AudioMessageComponent } from './components/audio-message/audio-message.component';
+import { ButtonsMessageComponent } from './components/buttons-message/buttons-message.component';
 
 const routes: Routes = [
     {
@@ -36,7 +40,11 @@ const routes: Routes = [
         ChatInputComponent,
         ImageListComponent,
         ImageUploadComponent,
-        ChatComponent
+        ChatComponent,
+        TextMessageComponent,
+        ImageGroupMessageComponent,
+        AudioMessageComponent,
+        ButtonsMessageComponent
     ],
     providers: [
         FileStorageService,

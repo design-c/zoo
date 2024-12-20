@@ -18,7 +18,7 @@ import { IConfiguration } from '../../../config/configuration';
                     true,
                     './image'
                 );
-                service.createToken().then();
+//                service.createToken().then();
 
                 return service;
             }

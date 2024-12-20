@@ -4,7 +4,7 @@
             <zoo-chat/>
         </div>
         <div class="chat-input-wrapper">
-            <zoo-chat-input></zoo-chat-input>
+            <zoo-chat-input (sent)="sent($event)"/>
         </div>
     </div>
 </ion-content>

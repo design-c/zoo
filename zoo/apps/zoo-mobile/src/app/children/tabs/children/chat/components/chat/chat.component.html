@@ -2,10 +2,30 @@
     <tui-scrollbar class="chat-scroll">
         <div class="chat-container">
             <div class="chat-messages">
-                <div class="message" *ngFor="let message of messages()">
-                    <div class="message-text">{{ message.text }}</div>
-                    <div class="message-timestamp">{{ message.timestamp | date: 'short' }}</div>
-                </div>
+                @for (message of messages(); track message.id) {
+                    <div
+                        class="message"
+                        [class.message-user]="message.sender === 'user'"
+                        [class.message-system]="message.sender === 'bot'"
+                        [class.images]="message.type === 'imageGroup'"
+                    >
+                        @if (message.type === 'text') {
+                            <zoo-text-message [message]="message"></zoo-text-message>
+                        }
+                        @if (message.type === 'imageGroup') {
+                            <zoo-image-group-message [message]="message"></zoo-image-group-message>
+                        }
+                        @if (message.type === 'audio') {
+                            <zoo-audio-message [message]="message"></zoo-audio-message>
+                        }
+                        @if (message.type === 'buttons') {
+                            <zoo-buttons-message [message]="message"></zoo-buttons-message>
+                        }
+                        <div class="message-timestamp">
+                            {{ message.timestamp | date: 'HH:mm' }}
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </tui-scrollbar>

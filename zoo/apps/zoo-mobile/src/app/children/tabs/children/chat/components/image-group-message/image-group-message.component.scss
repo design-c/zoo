@@ -1,0 +1,21 @@
+.message-image-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .image-preview {
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
