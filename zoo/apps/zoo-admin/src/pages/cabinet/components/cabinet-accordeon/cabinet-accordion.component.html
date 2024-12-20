@@ -1,0 +1,10 @@
+<tui-accordion class="accordion">
+    <tui-accordion-item [open]="open" [showArrow]="false">
+        <div class="accordion__header">
+            <ng-content select="[header]"></ng-content>
+        </div>
+        <ng-template tuiAccordionItemContent>
+            <ng-content></ng-content>
+        </ng-template>
+    </tui-accordion-item>
+</tui-accordion>

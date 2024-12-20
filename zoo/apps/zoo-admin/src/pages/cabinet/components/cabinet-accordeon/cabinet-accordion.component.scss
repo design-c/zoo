@@ -1,0 +1,17 @@
+@import 'common';
+
+:host {
+    display: flex;
+    flex: 1;
+}
+
+.accordion {
+    &__header {
+        display: flex;
+        font-size: var(--text-size-m);
+        font-weight: 600;
+        padding: var(--text-size-s);
+        background-color: var(--color-primary);
+        color: var(--color-bg-primary);
+    }
+}

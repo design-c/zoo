@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TuiAccordion, TuiSegmented } from '@taiga-ui/kit';
-import { TuiExpandContent } from '@taiga-ui/core';
-import { NgComponentOutlet } from '@angular/common';
-import { ZooFormEditComponent } from '../../pages/zoo-form-edit/zoo-form-edit.component';
+import { CabinetHeaderComponent } from '../cabinet-header/cabinet-header.component';
+import { CabinetAccordionComponent } from '../cabinet-accordeon/cabinet-accordion.component';
+import { FormLayoutComponent } from '../form-layout/form-layout.component';
+import { CommonModule } from '@angular/common';
+import { CABINET_STATE } from '../../cabinet-state.const';
+import { FormStateService } from '../../services/form-state.service';
+import { TuiLet } from '@taiga-ui/cdk';
+
 
 @Component({
     templateUrl: './cabinet-layout.component.html',
@@ -13,13 +17,18 @@ import { ZooFormEditComponent } from '../../pages/zoo-form-edit/zoo-form-edit.co
         RouterOutlet,
         RouterLink,
         RouterLinkActive,
-        TuiSegmented,
-        TuiAccordion,
-        TuiExpandContent,
-        NgComponentOutlet,
-        ZooFormEditComponent
+        CabinetHeaderComponent,
+        CabinetAccordionComponent,
+        FormLayoutComponent,
+        TuiLet,
+        CommonModule
+    ],
+    providers: [
+        FormStateService
     ],
     standalone: true
 })
 export class CabinetLayoutComponent {
+    protected readonly routes: Array<keyof typeof CABINET_STATE> = Object.keys(CABINET_STATE) as Array<keyof typeof CABINET_STATE>;
+    protected readonly formState: FormStateService = inject(FormStateService);
 }

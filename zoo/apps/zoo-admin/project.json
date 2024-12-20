@@ -34,8 +34,14 @@
         "styles": [
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
-          "apps/zoo-admin/src/styles.scss"
+          "apps/zoo-admin/src/styles.scss",
+          "apps/zoo-admin/src/common.scss"
         ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "apps/zoo-admin/src"
+          ]
+        },
         "scripts": []
       },
       "configurations": {
