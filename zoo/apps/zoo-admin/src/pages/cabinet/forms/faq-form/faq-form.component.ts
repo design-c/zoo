@@ -1,15 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
-import { TuiFieldErrorPipe, TuiFile, TuiFilesComponent, TuiInputFiles, TuiInputFilesDirective, tuiValidationErrorsProvider } from '@taiga-ui/kit';
+import { TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
+import { TuiFieldErrorPipe, tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
-import { TuiNativeValidator } from '@taiga-ui/cdk';
 import { TuiTextareaModule } from '@taiga-ui/legacy';
 
 @Component({
     templateUrl: './faq-form.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrl: './faq-form.component.scss',
+    styleUrl: '../styles/form-style.scss',
     imports: [
         ReactiveFormsModule,
         TuiTextfieldComponent,
@@ -18,14 +16,7 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         CommonModule,
         TuiTextfieldDirective,
         TuiLabel,
-        TuiButton,
-        TuiNativeValidator,
         TuiTextareaModule,
-        TuiInputFiles,
-        TuiInputFilesDirective,
-        TuiFile,
-        TuiFilesComponent,
-        TuiTextfieldOptionsDirective,
     ],
     providers: [
         tuiValidationErrorsProvider({
@@ -46,13 +37,4 @@ export class FaqFormComponent {
         zooDescription: new FormControl('', [Validators.required]),
         file: new FormControl<any | null>(null, [Validators.required]),
     });
-
-    protected onSubmit() {
-        const { zooName, zooLocation, zooDescription } = this.createZooForm.value;
-
-        if (!zooName || !zooLocation || !zooDescription) {
-            return;
-        }
-
-    }
 }

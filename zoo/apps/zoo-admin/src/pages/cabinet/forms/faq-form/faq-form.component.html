@@ -1,32 +1,21 @@
-<div class="page-container">
-    <h3 class="form-title">Добавить вопрос</h3>
-    <form [formGroup]="createZooForm" (ngSubmit)="onSubmit()" class="create-zoo-form">
-        
-        <!-- Название зоопарка -->
-        <tui-textfield class="tui-space_top-4">
-            <label tuiLabel>Вопрос</label>
-            <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
-            <input
-                formControlName="zooName"
-                tuiTextfield
-                placeholder="Введите вопрос"
-            />
-        </tui-textfield>
-        
-        
-        <!-- Описание зоопарка -->
-        <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
-            <label tuiLabel>Ответ на вопрос</label>
-            <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
-            <textarea
-                placeholder="Введите оответ на вопрос"
-                tuiTextfieldLegacy
-            ></textarea>
-        </tui-textarea>
-        
-        <!-- Кнопка отправки -->
-        <button tuiButton type="submit" [disabled]="createZooForm.invalid" class="tui-space_top-4">
-            Сохранить
-        </button>
-    </form>
-</div>
+<form [formGroup]="createZooForm" class="form">
+    <!-- Название зоопарка -->
+    <tui-textfield class="tui-space_top-4">
+        <label tuiLabel>Вопрос</label>
+        <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+        <input
+            formControlName="zooName"
+            tuiTextfield
+            placeholder="Введите вопрос"
+        />
+    </tui-textfield>
+    <!-- Описание зоопарка -->
+    <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+        <label tuiLabel>Ответ на вопрос</label>
+        <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+        <textarea
+            placeholder="Введите оответ на вопрос"
+            tuiTextfieldLegacy
+        ></textarea>
+    </tui-textarea>
+</form>

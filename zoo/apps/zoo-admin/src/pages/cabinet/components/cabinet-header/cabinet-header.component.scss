@@ -17,17 +17,4 @@
         font-weight: bold;
         margin-bottom: var(--spacing-m);
     }
-
-    &__segmented {
-        display: flex;
-        font-size: var(--text-size-s);
-        justify-content: center;
-        gap: 1rem;
-        width: 100%;
-        max-width: 1000px;
-        background-color: var(--color-border); /* Фон для сегментов */
-        border-radius: 8px;
-        padding: 0.5rem 0;
-        box-shadow: 0 4px 6px var(--color-text-secondary);
-    }
 }

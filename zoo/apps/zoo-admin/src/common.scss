@@ -42,3 +42,16 @@ tui-accordion-item {
         padding: 0 !important;
     }
 }
+
+tui-segmented {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-s);
+    width: 100%;
+    max-width: 1000px;
+    background-color: var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-s) 0;
+    box-shadow: 0 4px 6px var(--color-text-secondary);
+}
+

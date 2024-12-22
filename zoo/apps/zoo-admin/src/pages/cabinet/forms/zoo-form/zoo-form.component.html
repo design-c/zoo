@@ -1,0 +1,39 @@
+<form [formGroup]="createZooForm" class="form">
+    <tui-textfield class="tui-space_top-4">
+        <label tuiLabel>Название зоопарка</label>
+        <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+        <input
+            formControlName="zooName"
+            tuiTextfield
+            placeholder="Введите название зоопарка"
+        />
+    </tui-textfield>
+    <!-- Местоположение -->
+    <tui-textfield class="tui-space_top-4">
+        <label tuiLabel>Местоположение</label>
+        <tui-error formControlName="zooLocation" [error]="[] | tuiFieldError | async"></tui-error>
+        <input
+            formControlName="zooLocation"
+            tuiTextfield
+            placeholder="Введите местоположение"
+        />
+    </tui-textfield>
+    <!-- Описание зоопарка -->
+    <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+        <label tuiLabel>Описание зоопарка</label>
+        <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+        <textarea
+            placeholder="Описание зоопарка"
+            tuiTextfieldLegacy
+        ></textarea>
+    </tui-textarea>
+    <!-- Контактная информация -->
+    <tui-textarea formControlName="zooContact" class="tui-space_top-4">
+        <label tuiLabel>Контактная информация зоопарка</label>
+        <tui-error formControlName="zooContact" [error]="[] | tuiFieldError | async"></tui-error>
+        <textarea
+            placeholder="Контактная информация зоопарка"
+            tuiTextfieldLegacy
+        ></textarea>
+    </tui-textarea>
+</form>

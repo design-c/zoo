@@ -1,34 +1,31 @@
-<div class="cabinet">
+<div class="cabinet" *ngIf="formState | async as activeState">
     <app-cabinet-header class="cabinet__header">
         <span header>Панель администратора зоопарка</span>
-        <ng-container *ngFor="let route of routes">
-            <a routerLinkActive
-               *tuiLet="formState.getState(route) as state"
-               [routerLink]="'./' + route"
-               [state]="state"
+        <tui-segmented [(activeItemIndex)]="formState.currentIndex">
+            <a *ngFor="let route of formState.states"
+               [routerLink]="'./'"
+               [queryParams]="{ tab: route.tab }"
             >
-                {{state.title}}
+                {{route.tabState.title}}
             </a>
-        </ng-container>
+        </tui-segmented>
     </app-cabinet-header>
-    <div class="cabinet__accordion-container" *tuiLet="formState | async as activeState">
-        <ng-container *ngIf="activeState !== null">
-            <app-accordion [open]="true">
-                <span header>{{ activeState!.create.header }}</span>
-                <app-form-layout>
-                    <span formTitle>{{ activeState!.create.formTitle }}</span>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, tempora!
-                    <span buttonText>{{ activeState!.create.buttonTitle }}</span>
-                </app-form-layout>
-            </app-accordion>
-            <app-accordion [open]="false">
-                <span header>{{ activeState!.update.header }}</span>
-                <app-form-layout>
-                    <span formTitle>{{ activeState!.update.formTitle }}</span>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, tempora!
-                    <span buttonText>{{ activeState!.update.buttonTitle }}</span>
-                </app-form-layout>
-            </app-accordion>
-        </ng-container>
+    <div class="cabinet__accordion-container">
+        <app-accordion [open]="true">
+            <span header>{{ activeState.create.header }}</span>
+            <app-form-layout>
+                <span formTitle>{{ activeState.create.formTitle }}</span>
+                <ng-container *ngComponentOutlet="activeState.component"></ng-container>
+                <span buttonText>{{ activeState.create.buttonTitle }}</span>
+            </app-form-layout>
+        </app-accordion>
+        <app-accordion [open]="false">
+            <span header>{{ activeState.update.header }}</span>
+            <app-form-layout>
+                <span formTitle>{{ activeState.update.formTitle }}</span>
+                <ng-container *ngComponentOutlet="activeState.component"></ng-container>
+                <span buttonText>{{ activeState.update.buttonTitle }}</span>
+            </app-form-layout>
+        </app-accordion>
     </div>
 </div>

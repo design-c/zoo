@@ -2,10 +2,8 @@
     <h3 class="form-layout__title">
         <ng-content select="[formTitle]"></ng-content>
     </h3>
-    <div class="form-layout__controls">
-        <ng-content></ng-content>
-    </div>
-    <button tuiButton type="submit" [disabled]="true" class="tui-space_top-4 form-layout__button">
+    <ng-content></ng-content>
+    <button tuiButton type="button" [disabled]="false" class="tui-space_top-4 form-layout__button">
         <ng-content select="[buttonText]"></ng-content>
     </button>
 </form>

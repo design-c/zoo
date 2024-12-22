@@ -1,8 +1,13 @@
 import { ICabinetState } from './interfaces/cabinet-state.interface';
-import { RouteKeys } from './cabinet.routes';
+import { Type } from '@angular/core';
+import { ZooFormComponent } from './forms/zoo-form/zoo-form.component';
+import { AnimalsFormComponent } from './forms/animals-form/animals-form.component';
+import { FaqFormComponent } from './forms/faq-form/faq-form.component';
+import { FormStates } from './enums/form-states.enum';
 
-export const CABINET_STATE: Record<RouteKeys, ICabinetState> = {
+export const CABINET_STATE: Record<keyof typeof FormStates, ICabinetState> = {
     zoo: {
+        component: ZooFormComponent as Type<any>,
         title: 'Управление зоопарком',
         create: {
             header: 'Создать зоопарк',
@@ -18,6 +23,7 @@ export const CABINET_STATE: Record<RouteKeys, ICabinetState> = {
         },
     },
     animals: {
+        component: AnimalsFormComponent as Type<any>,
         title: 'Управление животными',
         create: {
             header: 'Создать животное',
@@ -33,6 +39,7 @@ export const CABINET_STATE: Record<RouteKeys, ICabinetState> = {
         },
     },
     faq: {
+        component: FaqFormComponent as Type<any>,
         title: 'Настройка FAQ',
         create: {
             header: 'Создать FAQ',

@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
-import { TuiFieldErrorPipe, TuiFile, TuiFilesComponent, TuiInputFiles, TuiInputFilesDirective, tuiValidationErrorsProvider } from '@taiga-ui/kit';
+import { TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
+import { TuiFieldErrorPipe, tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
-import { TuiNativeValidator } from '@taiga-ui/cdk';
 import { TuiTextareaModule } from '@taiga-ui/legacy';
 
 @Component({
-    selector: 'app-zoo-form-create',
+    selector: 'app-zoo-form',
     standalone: true,
-    styleUrl: './zoo-form-create.component.scss',
-    templateUrl: './zoo-form-create.component.html',
+    styleUrl: '../styles/form-style.scss',
+    templateUrl: './zoo-form.component.html',
     imports: [
         ReactiveFormsModule,
         TuiTextfieldComponent,
@@ -19,13 +18,7 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         CommonModule,
         TuiTextfieldDirective,
         TuiLabel,
-        TuiButton,
-        TuiNativeValidator,
         TuiTextareaModule,
-        TuiInputFiles,
-        TuiInputFilesDirective,
-        TuiFile,
-        TuiFilesComponent,
     ],
     providers: [
         tuiValidationErrorsProvider({
@@ -33,8 +26,7 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         })
     ],
 })
-export class ZooFormCreateComponent {
-
+export class ZooFormComponent {
     protected readonly createZooForm: FormGroup<{
         zooName: FormControl<string | null>,
         zooLocation: FormControl<string | null>,
@@ -46,13 +38,4 @@ export class ZooFormCreateComponent {
         zooDescription: new FormControl('', [Validators.required]),
         zooContact: new FormControl('', [Validators.required]),
     });
-
-    protected onSubmit() {
-        const { zooName, zooLocation, zooDescription, zooContact } = this.createZooForm.value;
-
-        if (!zooName || !zooLocation || !zooDescription || !zooContact) {
-            return;
-        }
-
-    }
 }
