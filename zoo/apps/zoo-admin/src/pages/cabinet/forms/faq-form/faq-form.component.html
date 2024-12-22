@@ -11,11 +11,11 @@
     </tui-textfield>
     <!-- Описание зоопарка -->
     <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
-        <label tuiLabel>Ответ на вопрос</label>
-        <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+        Ответ на вопрос
         <textarea
             placeholder="Введите оответ на вопрос"
             tuiTextfieldLegacy
         ></textarea>
     </tui-textarea>
+    <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
 </form>

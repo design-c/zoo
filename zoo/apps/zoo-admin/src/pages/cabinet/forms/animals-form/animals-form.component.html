@@ -21,13 +21,12 @@
     </tui-textfield>
     <!-- Описание зоопарка -->
     <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
-        <label tuiLabel>Описание животного</label>
-        <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+        Введите описания животного
         <textarea
-            placeholder="Введите описания животного"
             tuiTextfieldLegacy
         ></textarea>
     </tui-textarea>
+    <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
     
     <div class="file">
         <label tuiLabel>Изображение животного</label>
