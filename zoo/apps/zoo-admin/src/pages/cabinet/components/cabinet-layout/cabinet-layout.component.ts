@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, inject, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CabinetHeaderComponent } from '../cabinet-header/cabinet-header.component';
 import { CabinetAccordionComponent } from '../cabinet-accordeon/cabinet-accordion.component';
 import { FormLayoutComponent } from '../form-layout/form-layout.component';
 import { CommonModule } from '@angular/common';
-import { CABINET_STATE } from '../../cabinet-state.const';
 import { FormStateService } from '../../services/form-state.service';
 import { TuiLet } from '@taiga-ui/cdk';
 import { TuiSegmented } from '@taiga-ui/kit';
@@ -32,5 +31,4 @@ import { TuiSegmented } from '@taiga-ui/kit';
 })
 export class CabinetLayoutComponent {
     protected readonly formState: FormStateService = inject(FormStateService);
-    protected activeIndex: number = 0;
 }

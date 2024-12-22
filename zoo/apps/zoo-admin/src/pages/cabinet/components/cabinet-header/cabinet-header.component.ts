@@ -9,5 +9,4 @@ import { TuiSegmented } from '@taiga-ui/kit';
     standalone: true
 })
 export class CabinetHeaderComponent {
-
 }
