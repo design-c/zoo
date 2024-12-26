@@ -37,6 +37,12 @@ module.exports = [
                         style: 'kebab-case',
                     },
                 ],
+                '@angular-eslint/component-class-suffix': [
+                    'error',
+                    {
+                        suffixes: ['Component', 'Directive', 'Page' ],
+                    },
+                ]
             },
         })),
     ...compat

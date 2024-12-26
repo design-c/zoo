@@ -20,17 +20,17 @@ export interface ImageGroupMessage extends BaseMessage {
 
 export interface AudioMessage extends BaseMessage {
     type: 'audio';
-    audioUrl: string; // URL аудиофайла
+    audioUrl: string;
 }
 
 export interface IButton {
-    label: string; // Текст кнопки
-    action: () => void; // Действие при нажатии кнопки
+    label: string;
+    action: () => void;
 }
 
 export interface ButtonsMessage extends BaseMessage {
     type: 'buttons';
-    buttons: IButton[]; // Массив кнопок
+    buttons: IButton[];
     text?: string;
 }
 

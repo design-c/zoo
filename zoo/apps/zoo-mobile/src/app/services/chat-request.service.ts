@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 
 /**
@@ -24,27 +24,21 @@ export class ChatRequestService {
      * Устанавливает соединение с сервером Socket.IO.
      * @returns Observable<boolean> Возвращает поток, который сигнализирует об успешном подключении.
      */
-    public connectToSocket(): Observable<boolean> {
+    public connectToSocket(chatId: string): Observable<boolean> {
         const connectionSubject = new ReplaySubject<boolean>(1);
 
-        this._socket = io(this.apiUrl, {
-            transports: ['websocket'], // Используем WebSocket
+        this._socket = io(document.location.host, {
+            path: '/api/chat',
         });
 
         this._socket.on('connect', () => {
-            console.log('Подключено к Socket.IO');
             connectionSubject.next(true);
+            this.sendMessage('init', { "id": chatId });
         });
 
-        this._socket.on('disconnect', () => {
-            console.log('Отключено от Socket.IO');
-            connectionSubject.next(false);
-        });
+        this._socket.on('disconnect', () => connectionSubject.next(false));
 
-        this._socket.on('connect_error', (error) => {
-            console.error('Ошибка подключения к Socket.IO:', error);
-            connectionSubject.error(error);
-        });
+        this._socket.on('connect_error', error => connectionSubject.error(error));
 
         return connectionSubject.asObservable();
     }
@@ -71,7 +65,7 @@ export class ChatRequestService {
      * @param event Название события.
      * @param message Сообщение для отправки.
      */
-    public sendMessage(event: string, message: any): void {
+    public sendMessage<T>(event: string, message: T): void {
         if (this._socket) {
             this._socket.emit(event, message);
         } else {
@@ -84,20 +78,16 @@ export class ChatRequestService {
      * @param event Название события.
      * @returns Observable<any> Поток данных от сервера.
      */
-    public onMessage(event: string): Observable<any> {
+    public onMessage<T>(event: string): Observable<T> {
         if (!this._socket) {
-            console.error('Socket.IO не подключен.');
-            return new Observable((observer) => {
-                observer.error('Socket.IO не подключен.');
-            });
+            return throwError(() => 'Socket.IO не подключен.' );
         }
 
-        return new Observable<any>((observer) => {
-            this._socket?.on(event, (data: any) => {
+        return new Observable((observer) => {
+            this._socket?.on(event, (data: T) => {
                 observer.next(data);
             });
 
-            // Отписываемся от события при завершении Observable
             return () => {
                 this._socket?.off(event);
             };

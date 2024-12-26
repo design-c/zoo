@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 import { AuthService } from '../../services/auth.service';
-import { catchError, from, Observable, of, switchMap } from 'rxjs';
+import { catchError, from, Observable, of, switchMap, take } from 'rxjs';
 import { Device } from '@capacitor/device';
 import { CURRENT_ZOO_TOKEN } from '../../tokens/current-zoo.token';
 
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
             .pipe(
                 switchMap(isAuth => !isAuth ? this.register() : of(false)),
                 switchMap(() => this._currentZoo$),
+                take(1)
             ).subscribe();
     }
 
