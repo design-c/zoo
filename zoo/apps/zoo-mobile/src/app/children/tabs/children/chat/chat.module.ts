@@ -17,6 +17,7 @@ import { ImageGroupMessageComponent } from './components/image-group-message/ima
 import { AudioMessageComponent } from './components/audio-message/audio-message.component';
 import { ButtonsMessageComponent } from './components/buttons-message/buttons-message.component';
 import { WritingMessageComponent } from './components/writing-message/writing-message.component';
+import { CURRENT_CHAT_PROVIDER } from './providers/current-chat.provider';
 
 const routes: Routes = [
     {
@@ -50,7 +51,8 @@ const routes: Routes = [
     ],
     providers: [
         FileStorageService,
-        ChatService
+        ChatService,
+        CURRENT_CHAT_PROVIDER
     ]
 })
 export class ChatModule {

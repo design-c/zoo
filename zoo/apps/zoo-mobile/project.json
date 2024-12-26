@@ -115,7 +115,10 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
+        "options": {
+            "proxyConfig": "apps/zoo-admin/proxy.conf.json"
+        },
+        "configurations": {
         "production": {
           "buildTarget": "zoo-mobile:build:production"
         },
