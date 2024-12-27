@@ -6,8 +6,9 @@ services:
         extends:
             file: docker-compose.base.yml
             service: nx-angular-base
-        environment:
-            - PROJECT=zoo-mobile
+        build:
+            args:
+                - PROJECT=zoo-mobile
         ports:
             - "1458:80"
     zoo-admin:
@@ -15,8 +16,9 @@ services:
         extends:
             file: docker-compose.base.yml
             service: nx-angular-base
-        environment:
-            - PROJECT=zoo-backend
+        build:
+            args:
+                - PROJECT=zoo-admin
         ports:
             - "1128:80"
     backend:
@@ -26,7 +28,7 @@ services:
             service: nx-app-base
         env_file:
             - .env
-        command: npx nx serve zoo-backend
+        command: bash -c "npx nx build zoo-backend --configuration=production && node dist/apps/zoo-backend/main.js"
         ports:
             - ${BACKEND_PORT}:${BACKEND_PORT}
         depends_on:
