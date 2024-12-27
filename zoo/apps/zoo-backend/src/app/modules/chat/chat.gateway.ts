@@ -7,7 +7,7 @@ import { ChatManagerFactoryService, ChatManagerService } from './managers';
 
 
 @WebSocketGateway({ path: '/api/chat' })
-export class ChatGateway  implements  OnGatewayDisconnect {
+export class ChatGateway implements OnGatewayDisconnect {
     @WebSocketServer()
     private readonly _server: Server;
 
@@ -35,21 +35,16 @@ export class ChatGateway  implements  OnGatewayDisconnect {
         @MessageBody() data: GetMessageDto,
     ) {
         const { text, attachments } = data;
+        if (attachments.length) {
+            const message = await this._clients.get(client.id).handleImg(attachments);
+
+            return await this.answer(client, message);
+        }
+
         const message = await this._clients.get(client.id).handleMessage(text);
 
         await this.answer(client, message);
     }
-
-    @SubscribeMessage('buttonClick')
-    public async handleButtonClick(
-        @ConnectedSocket() client: Socket,
-        @MessageBody() data: { buttonId: string },
-    ) {
-        const button = await this._clients.get(client.id).handleButton(data.buttonId);
-
-        await this.answer(client, button);
-    }
-
 
     public handleDisconnect(client: Socket) {
         this._clients.delete(client.id);

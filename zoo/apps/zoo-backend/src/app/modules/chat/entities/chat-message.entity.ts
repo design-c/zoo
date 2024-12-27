@@ -27,6 +27,14 @@ export class ChatMessage extends BaseEntity {
     })
     @Prop({ type: [{ type: Types.ObjectId  }] })
     public readonly attachments: Types.ObjectId[];
+
+    @ApiProperty({
+        type: [String],
+        description: 'Список кнопок',
+    })
+    @Prop({ type: [String],  })
+    public readonly buttons: string[];
+
 }
 
 export const ChatMessageSchema = SchemaFactory.createForClass(ChatMessage);

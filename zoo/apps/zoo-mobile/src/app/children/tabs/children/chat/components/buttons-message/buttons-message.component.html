@@ -1,5 +1,4 @@
-<div *ngIf="message.text" class="message-text">
-    {{ message.text }}
+<div *ngIf="message.text" class="message-text" [innerHtml]="message.text">
 </div>
 
 <div class="message-buttons">

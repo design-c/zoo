@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ChatMessageService, ChatService } from '../services';
 import { Chat, ChatMessage } from '../entities';
 import { Types } from 'mongoose';
 import { Animal, AnimalService, FileStorageService, GigaChatService, Zoo, ZooService } from '../../../shared';
+import { ButtonEnum } from '../enums/button.enum';
 
 
 @Injectable()
@@ -26,26 +27,55 @@ export class ChatManagerService {
 
     public async getInitMessage(): Promise<ChatMessage> {
         return await this.createMessage({
-            messageText: 'Добро пожаловать в чат! Чем я могу помочь?',
+            messageText: 'Привет! Это AI-чат, который может распознавать животных по фотографии. Но помните, я могу иногда ошибаться.',
+            buttons: [ButtonEnum.agree]
         });
     }
 
     public async handleImg(attachments: string[]): Promise<ChatMessage> {
-        return await this.createMessage({ messageText: 'Это хомяк, брат.'}, true)
+        const answer = await this.createMessage({ messageText: 'Скорее всего на фото: Тигр'}, true);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(answer);
+            }, 2000);
+        });
     }
 
     public async handleMessage(text: string): Promise<ChatMessage> {
+        if (text === ButtonEnum.agree && this._history.length === 1) {
+            return await this.sendInfoMessage();
+        }
+
+        switch (text) {
+            case ButtonEnum.whichAnimals:
+                return await this.createMessage({ messageText: 'В зоопарке есть следующие животные: ' + this._animals.map(a => a.name).join(', ') }, true);
+            case ButtonEnum.rules:
+                return await this.createMessage({ messageText: 'Правила посещения зоопарка: ...' }, true);
+            case ButtonEnum.whatToDo:
+                return await this.createMessage({ messageText: 'Гуляй по зоопарку, наблюдай за животными' });
+        }
+
         const answer = await this._gigaChatService.completion([{
             role: 'user',
-            content: text
+            content: `Ты помощник в ai-чате зоопарка.
+            Сейчас мы говорим о животном: "Тигр", Ответ должен содержать текст и от одной до нескольких кнопок, не выводи ничего дополнительного, не используй ссылки в ответах.
+            Дай ответ на вопрос: "${ text }";
+            Отвечай в формате xml как представлено нижу:
+            <answer>Ответ на вопрос</answer>
+            <btn>текст кнопки для продолжения диалога</btn>
+            <btn>текст кнопки для продолжения диалога</btn>
+           `
         }]);
 
-        return await this.createMessage({ messageText: answer.content }, true);
-    }
+        const answerMatch = answer.content.match(/<answer>(.*?)<\/answer>/s);
+        const btnMatches = answer.content.match(/<btn>(.*?)<\/btn>/g);
 
-    public async handleButton(buttonId: string): Promise<ChatMessage> {
-        return this.createMessage({
-           messageText: `кнока обработана: ${buttonId}`
+        const textAnswer = answerMatch ? answerMatch[1].trim() : null;
+        const buttons = btnMatches ? btnMatches.map(btn => btn.replace(/<\/?btn>/g, '').trim()) : [];
+
+        return await this.createMessage({
+            messageText: textAnswer,
+            buttons: buttons.length > 0 ? buttons : undefined
         }, true);
     }
 
@@ -71,5 +101,16 @@ export class ChatManagerService {
 
     private async detectAnimals(files: string[]): Promise<string[]> {
         return [];
+    }
+
+    private async sendInfoMessage(): Promise<ChatMessage> {
+        const messageText = `Отличной фотоохоты!<br>
+           Присылай мне фотографии животных, и я попробую их распознать.
+           Или используй кнопки подсказки.
+        `;
+
+        const buttons = [ButtonEnum.whichAnimals, ButtonEnum.rules, ButtonEnum.whatToDo];
+
+        return await this.createMessage({ messageText, buttons }, true);
     }
 }
