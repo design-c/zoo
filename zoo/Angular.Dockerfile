@@ -16,3 +16,4 @@ FROM nginx
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist/apps/**/browser  /usr/share/nginx/html
+COPY --from=builder /app/dist/apps/**  /usr/share/nginx/html

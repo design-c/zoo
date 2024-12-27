@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+    mobile:
+        container_name: 'mobile-app'
+        image: zuppi/zoo-mobile
+        ports:
+            - "1234:80"
+    zoo-admin:
+        container_name: 'zoo-admin-app'
+        image: zuppi/zoo-admin
+        ports:
+            - "2324:80"
