@@ -1,6 +1,13 @@
 <div class="header">
     <div class="header__title">
-        <ng-content select="[header]"></ng-content>
+        <ng-content></ng-content>
     </div>
-    <ng-content></ng-content>
+    <tui-segmented [(activeItemIndex)]="formState.currentIndex">
+        <a *ngFor="let route of formState.states"
+           [routerLink]="'./'"
+           [queryParams]="{ tab: route.tab }"
+        >
+            {{route.tabState.title}}
+        </a>
+    </tui-segmented>
 </div>

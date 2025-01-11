@@ -1,31 +1,7 @@
-<div class="cabinet" *ngIf="formState | async as activeState">
-    <app-cabinet-header class="cabinet__header">
-        <span header>Панель администратора зоопарка</span>
-        <tui-segmented [(activeItemIndex)]="formState.currentIndex">
-            <a *ngFor="let route of formState.states"
-               [routerLink]="'./'"
-               [queryParams]="{ tab: route.tab }"
-            >
-                {{route.tabState.title}}
-            </a>
-        </tui-segmented>
+<div class="cabinet" *tuiLet="formState | async as activeState">
+    <app-cabinet-header>
+        <span>Панель администратора зоопарка</span>
     </app-cabinet-header>
-    <div class="cabinet__accordion-container">
-        <app-accordion [open]="true">
-            <span header>{{ activeState.create.header }}</span>
-            <app-form-layout>
-                <span formTitle>{{ activeState.create.formTitle }}</span>
-                <ng-container *ngComponentOutlet="activeState.component"></ng-container>
-                <span buttonText>{{ activeState.create.buttonTitle }}</span>
-            </app-form-layout>
-        </app-accordion>
-        <app-accordion [open]="false">
-            <span header>{{ activeState.update.header }}</span>
-            <app-form-layout>
-                <span formTitle>{{ activeState.update.formTitle }}</span>
-                <ng-container *ngComponentOutlet="activeState.component"></ng-container>
-                <span buttonText>{{ activeState.update.buttonTitle }}</span>
-            </app-form-layout>
-        </app-accordion>
-    </div>
+    <ng-container *ngComponentOutlet="activeState?.createComponent ?? null"></ng-container>
+    <ng-container *ngComponentOutlet="activeState?.updateComponent ?? null"></ng-container>
 </div>

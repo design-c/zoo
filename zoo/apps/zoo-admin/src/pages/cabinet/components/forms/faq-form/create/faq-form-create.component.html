@@ -1,0 +1,28 @@
+<app-form-layout>
+    <span accordionTitle>Создать FAQ</span>
+    <span formTitle>Форма создания FAQ</span>
+    <ng-container [formGroup]="form">
+        <fieldset class="form">
+            <!-- Название зоопарка -->
+            <tui-textfield class="tui-space_top-4">
+                <label tuiLabel>Вопрос</label>
+                <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+                <input
+                    formControlName="zooName"
+                    tuiTextfield
+                    placeholder="Введите вопрос"
+                />
+            </tui-textfield>
+            <!-- Описание зоопарка -->
+            <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+                Ответ на вопрос
+                <textarea
+                    placeholder="Введите оответ на вопрос"
+                    tuiTextfieldLegacy
+                ></textarea>
+            </tui-textarea>
+            <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+        </fieldset>
+    </ng-container>
+    <span buttonText>Создать FAQ</span>
+</app-form-layout>

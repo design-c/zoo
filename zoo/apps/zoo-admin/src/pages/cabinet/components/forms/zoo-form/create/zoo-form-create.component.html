@@ -1,0 +1,44 @@
+<app-form-layout>
+    <span accordionTitle>Создать зоопарк</span>
+    <span formTitle>Форма создания зоопарка</span>
+    <ng-container [formGroup]="form">
+        <fieldset class="form">
+            <tui-textfield class="tui-space_top-4">
+                <label tuiLabel>Название зоопарка</label>
+                <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+                <input
+                    formControlName="zooName"
+                    tuiTextfield
+                    placeholder="Введите название зоопарка"
+                />
+            </tui-textfield>
+            <!-- Местоположение -->
+            <tui-textfield class="tui-space_top-4">
+                <label tuiLabel>Местоположение</label>
+                <tui-error formControlName="zooLocation" [error]="[] | tuiFieldError | async"></tui-error>
+                <input
+                    formControlName="zooLocation"
+                    tuiTextfield
+                    placeholder="Введите местоположение"
+                />
+            </tui-textfield>
+            <!-- Описание зоопарка -->
+            <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+                Описание зоопарка
+                <textarea
+                    tuiTextfieldLegacy
+                ></textarea>
+            </tui-textarea>
+            <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+            <!-- Контактная информация -->
+            <tui-textarea formControlName="zooContact" class="tui-space_top-4">
+                Контактная информация зоопарка
+                <textarea
+                    tuiTextfieldLegacy
+                ></textarea>
+            </tui-textarea>
+            <tui-error formControlName="zooContact" [error]="[] | tuiFieldError | async"></tui-error>
+        </fieldset>
+    </ng-container>
+    <span buttonText>Создать зоопарк</span>
+</app-form-layout>

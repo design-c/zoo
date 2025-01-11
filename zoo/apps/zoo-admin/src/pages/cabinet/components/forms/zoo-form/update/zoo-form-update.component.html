@@ -1,0 +1,58 @@
+<app-form-layout>
+    <span accordionTitle>Редактировать зоопарк</span>
+    <span formTitle>Форма редактирования зоопарка</span>
+    <ng-container [formGroup]="form">
+        <fieldset class="form">
+            <!-- Выбор животного -->
+            <tui-textfield tuiChevron>
+                <label tuiLabel>Список зоопарков</label>
+                <select
+                    formControlName="zooSelect"
+                    placeholder="Выберете зоопарк для изменения"
+                    tuiTextfield
+                ></select>
+                <tui-error formControlName="zooSelect" [error]="[] | tuiFieldError | async"></tui-error>
+                <tui-data-list-wrapper
+                    *tuiTextfieldDropdown
+                    [items]="zooItems"
+                />
+            </tui-textfield>
+            <tui-textfield class="tui-space_top-4">
+                <label tuiLabel>Название зоопарка</label>
+                <tui-error formControlName="zooName" [error]="[] | tuiFieldError | async"></tui-error>
+                <input
+                    formControlName="zooName"
+                    tuiTextfield
+                    placeholder="Введите название зоопарка"
+                />
+            </tui-textfield>
+            <!-- Местоположение -->
+            <tui-textfield class="tui-space_top-4">
+                <label tuiLabel>Местоположение</label>
+                <tui-error formControlName="zooLocation" [error]="[] | tuiFieldError | async"></tui-error>
+                <input
+                    formControlName="zooLocation"
+                    tuiTextfield
+                    placeholder="Введите местоположение"
+                />
+            </tui-textfield>
+            <!-- Описание зоопарка -->
+            <tui-textarea formControlName="zooDescription" class="tui-space_top-4">
+                Описание зоопарка
+                <textarea
+                    tuiTextfieldLegacy
+                ></textarea>
+            </tui-textarea>
+            <tui-error formControlName="zooDescription" [error]="[] | tuiFieldError | async"></tui-error>
+            <!-- Контактная информация -->
+            <tui-textarea formControlName="zooContact" class="tui-space_top-4">
+                Контактная информация зоопарка
+                <textarea
+                    tuiTextfieldLegacy
+                ></textarea>
+            </tui-textarea>
+            <tui-error formControlName="zooContact" [error]="[] | tuiFieldError | async"></tui-error>
+        </fieldset>
+    </ng-container>
+    <span buttonText>Редактировать зоопарк</span>
+</app-form-layout>

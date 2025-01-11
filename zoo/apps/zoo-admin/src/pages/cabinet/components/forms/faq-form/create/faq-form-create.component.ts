@@ -4,11 +4,14 @@ import { TuiError, TuiLabel, TuiTextfieldComponent, TuiTextfieldDirective } from
 import { TuiFieldErrorPipe, tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { TuiTextareaModule } from '@taiga-ui/legacy';
+import { FormLayoutComponent } from '../../form-layout/form-layout.component';
+import { FORM_TOKEN } from '../../../../tokens/form.token';
+import { IForm } from '../../../../interfaces/form.interface';
+
 
 @Component({
-    templateUrl: './animals-form.component.html',
-    styleUrl: '../styles/form-style.scss',
-    standalone: true,
+    templateUrl: './faq-form-create.component.html',
+    styleUrl: '../../styles/form-style.scss',
     imports: [
         ReactiveFormsModule,
         TuiTextfieldComponent,
@@ -18,24 +21,25 @@ import { TuiTextareaModule } from '@taiga-ui/legacy';
         TuiTextfieldDirective,
         TuiLabel,
         TuiTextareaModule,
+        FormLayoutComponent,
     ],
     providers: [
         tuiValidationErrorsProvider({
             required: 'Это поле обязательно для заполнения',
-        })
+        }),
+        {
+            provide: FORM_TOKEN,
+            useExisting: FaqFormCreateComponent
+        }
     ],
+    standalone: true
 })
-export class AnimalsFormComponent {
-
-    protected readonly createZooForm: FormGroup<{
+export class FaqFormCreateComponent implements IForm {
+    public readonly form: FormGroup<{
         zooName: FormControl<string | null>,
-        zooLocation: FormControl<string | null>,
         zooDescription: FormControl<string | null>,
-        file: FormControl<any | null>,
     }> = new FormGroup({
         zooName: new FormControl('', [Validators.required]),
-        zooLocation: new FormControl('', [Validators.required]),
         zooDescription: new FormControl('', [Validators.required]),
-        file: new FormControl<any | null>(null, [Validators.required]),
     });
 }

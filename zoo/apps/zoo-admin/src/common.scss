@@ -55,3 +55,10 @@ tui-segmented {
     box-shadow: 0 4px 6px var(--color-text-secondary);
 }
 
+fieldset {
+    all: unset;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+}

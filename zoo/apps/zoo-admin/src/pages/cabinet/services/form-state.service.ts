@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICabinetState } from '../interfaces/cabinet-state.interface';
-import { CABINET_STATE } from '../cabinet-state.const';
 import { ActivatedRoute } from '@angular/router';
 import { FormStates } from '../enums/form-states.enum';
+import { FormDataService } from './form-data.service';
+import { ICabinetState } from '../interfaces/cabinet-state.interface';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FormStateService extends Observable<ICabinetState> {
     public readonly states: Array<{ tab: keyof typeof FormStates, tabState: ICabinetState }> =
-        Object.entries(CABINET_STATE).map(([tab, tabState]) => ({ tab: tab as keyof typeof FormStates, tabState }));
+        inject(FormDataService).data.map(([tab, tabState]) => ({ tab, tabState }));
 
     public currentIndex: number = 0;
 
